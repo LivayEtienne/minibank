@@ -1,0 +1,62 @@
+/* Style des titres des cartes */
+.card-title {
+    font-weight: bold;
+    font-size: 1.25rem; /* Augmente la taille du texte */
+    margin-bottom: 0.5rem; /* Ajoute un espacement en bas */
+    color: #343a40; /* Couleur sombre pour le texte */
+}
+
+/* Style des icônes dans le corps des cartes */
+.card-body i {
+    font-size: 3rem;
+    color: #ffffff; /* Couleur blanche pour un meilleur contraste */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Ajoute une ombre à l'icône */
+}
+
+/* Style général des cartes */
+.card {
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 12px; /* Coins arrondis */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Ombre plus douce */
+    transition: transform 0.2s; /* Ajoute une transition lors du survol */
+}
+
+/* Effet de survol sur la carte */
+.card:hover {
+    transform: translateY(-5px); /* Légère élévation au survol */
+}
+
+/* Style de l'en-tête de la carte */
+.card-header {
+    background-color: #007bff; /* Couleur de fond bleue */
+    color: white; /* Couleur du texte blanc */
+    border-radius: 10px 10px 0 0; /* Coins arrondis en haut */
+    padding: 10px 15px; /* Ajoute un espacement interne */
+    font-size: 1.5rem; /* Taille de police plus grande */
+}
+
+/* Conteneur de graphiques */
+.chart-container {
+    position: relative;
+    height: 40vh; /* Hauteur du conteneur de graphique */
+    width: 100%;
+    border-radius: 12px; /* Coins arrondis */
+    overflow: hidden; /* Masque les débordements */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Ombre douce autour du graphique */
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.8), rgba(240, 240, 240, 0.8)); /* Fond dégradé */
+}
+
+/* Styles pour les textes dans les graphiques */
+.chart-container h5 {
+    position: absolute;
+    top: 10px; /* Positionne le titre en haut */
+    left: 15px; /* Positionne le titre à gauche */
+    font-size: 1.2rem; /* Taille de police */
+    color: #007bff; /* Couleur bleue */
+}
+
+/* Styles pour le graphique */
+canvas {
+    border-radius: 12px; /* Coins arrondis pour le graphique */
+}

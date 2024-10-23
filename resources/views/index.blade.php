@@ -84,8 +84,8 @@
 
 
         <!-- Contenu principal -->
-        <div class="{{ url('/auth/login') }}" style="margin-left: 250px; margin-top: 70px; width: calc(100% - 250px);">
-            <a href="/auth/login" class="btn-add-admin" style="margin-left: 10px; margin-bottom: 15px; display: inline-block; text-decoration: none;">
+        <div class="{{ url('/creer_compte') }}" style="margin-left: 250px; margin-top: 70px; width: calc(100% - 250px);">
+            <a href="/creer_compte" class="btn-add-admin" style="margin-left: 10px; margin-bottom: 15px; display: inline-block; text-decoration: none;">
                 <button style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; display: flex; align-items: center;">
                     <!-- Icône + -->
                     <span style="font-weight: bold; font-size: 20px; margin-right: 8px;">+</span>

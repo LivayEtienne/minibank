@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id(); // Identifiant unique
             $table->string('numero_compte')->unique(); // Numéro de compte
             $table->foreignId('id_user')->constrained('users'); // Lien vers la table users
-            $table->int('solde'); // Solde
+            $table->integer('solde'); // Solde
             $table->decimal('bonus', 10, 2)->default(0); // Bonus
             $table->timestamps(); // Ajoute created_at et updated_at
         });

@@ -7,8 +7,11 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/charts.js',
+                'resources/css/connexion.css',
                 'resources/css/style.css',
-                'resources/js/charts.js'
+                'resources/js/connexion.js',
+                'resources/assets/door.jpg'
             ],
             refresh: true,
         }),

@@ -40,6 +40,7 @@ class agentController extends Controller
                'source_user.nom as nom_source',       
                'source_user.telephone as telephone', 
                'source_user.photo as photo_source', // pour la photo
+               
                'destination_user.prenom as prenom_destination', 
                'destination_user.nom as nom_destination',
                'destination_user.photo as photo_destination'

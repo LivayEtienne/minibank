@@ -1,6 +1,7 @@
 body {
     background-color: #ffffff;
     margin: 0;
+    
 }
 
 .custom-bg-blue {
@@ -78,6 +79,7 @@ button {
     }
 
     .carte1 {
+        padding-top: 300px;
         width: 100%;
         margin-left: 0;
     }
@@ -92,8 +94,20 @@ button {
     padding-top: 50px;
     margin-left: 120px;
 }
-.carte1{
-    background-color: #003366;
+.carte1 {
+    display: flex; /* Utiliser Flexbox */
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center; /* Centrer verticalement */
+    width: 582px; /* Ajuster selon vos besoins */
+    height: 283px; /* Ajuster la hauteur selon vos besoins */
+    background-color: #003366; /* Exemple de couleur de fond */
+    padding: 20px; /* Espacement interne */
+    border: 2px solid #FFFFFF; /* Bordure pour le visuel */
+    border-radius: 10px; /* Coins arrondis */
+}
+.img-fluid {
+    width: 250px; /* Largeur de l'image */
+    height: auto; /* Hauteur automatique pour garder les proportions */
 }
 h2 {
     background-color: #FFA500;
@@ -125,4 +139,26 @@ h2 {
     height: 70px;
     width: 187px;
     color: #ffffff;
+}
+.col-md-6 {
+    position: fixed;
+    margin-left: 500px;
+    width: 50%;
+}
+.container {
+    margin-top: 3000px;
+}
+span {
+    color: #337fe2;
+    font-size: 20px;
+}
+.solde {
+    size: 45px;
+    font-size: 45px;
+}
+.montant {
+    font-size: 45px;
+}
+#montant {
+    font-size: 45px;
 }

@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClientModel extends Model
 {
-    // Si la table s'appelle 'clients', tu n'as pas besoin de spécifier le nom.
-    protected $table = 'transactions';
-
-    protected $fillable = ['id', 'date', 'montant'];
+ 
+    
+    protected $table = 'clients'; // Spécifiez le nom de la table
+    protected $fillable = ['id_user', 'solde', 'autres_colonnes']; // Ajoutez toutes les colonnes dont vous avez besoin
     
 }
 

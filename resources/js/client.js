@@ -1,6 +1,6 @@
 
 
-
+/*
 
 // Script pour masquer/démasquer le montant
 const toggleButton = document.getElementById('toggle');
@@ -17,3 +17,42 @@ toggleButton.addEventListener('click', () => {
         toggleButton.classList.add('fa-eye-slash');
     }
 });
+*/
+function toggleSolde() {
+    // Sélection des éléments avec les montants caché et visible
+    const montant = document.getElementById('montant');
+    const montantVisible = document.getElementById('montant-visible');
+    const toggleIcon = document.getElementById('toggle');
+
+    // Toggle entre le montant caché et visible
+    if (montant.style.display === 'none') {
+        montant.style.display = 'inline'; // Afficher les étoiles
+        montantVisible.style.display = 'none'; // Cacher le montant réel
+        toggleIcon.classList.replace('fa-eye-slash', 'fa-eye'); // Changer l'icône pour "voir"
+    } else {
+        montant.style.display = 'none'; // Cacher les étoiles
+        montantVisible.style.display = 'inline'; // Afficher le montant réel
+        toggleIcon.classList.replace('fa-eye', 'fa-eye-slash'); // Changer l'icône pour "cacher"
+    }
+}
+ /*
+<script>
+    function toggleSolde() {
+        // Sélection des éléments avec les montants caché et visible
+        const montant = document.getElementById('montant');
+        const montantVisible = document.getElementById('montant-visible');
+        const toggleIcon = document.getElementById('toggle');
+
+        // Toggle entre le montant caché et visible
+        if (montant.style.display === 'none') {
+            montant.style.display = 'inline'; // Afficher les étoiles
+            montantVisible.style.display = 'none'; // Cacher le montant réel
+            toggleIcon.classList.replace('fa-eye-slash', 'fa-eye'); // Changer l'icône pour "voir"
+        } else {
+            montant.style.display = 'none'; // Cacher les étoiles
+            montantVisible.style.display = 'inline'; // Afficher le montant réel
+            toggleIcon.classList.replace('fa-eye', 'fa-eye-slash'); // Changer l'icône pour "cacher"
+        }
+    }
+</script>
+ */

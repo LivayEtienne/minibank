@@ -17,6 +17,7 @@
     </div>
 </div>
 
+
 <div class="container mt-4">
     <div class="row">
         <!-- Historique Section -->
@@ -31,14 +32,22 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <!-- Prénom et Nom sur la même ligne -->
                         <div class="transaction-info">
-                            <h5 class="mb-0">{{ $transaction->prenom_source }} {{ $transaction->nom_source }} {{ $transaction->telephone }}</h5>
-                            
+                            <h5 class="mb-0"> <span>{{ $transaction->prenom_source }} {{ $transaction->nom_source }} {{ $transaction->telephone }}</span></h5>
+                            {{ $transaction->type }}
                         </div>
                         <!-- Montant aligné à droite -->
-                        <span>{{ $transaction->montant }}</span>
+                        <span>
+                        @if ($transaction->type == 'depot')
+                    +{{ $transaction->montant }}
+                @elseif ($transaction->type == 'retrait' || $transaction->type == 'envoi')
+                    -{{ $transaction->montant .'F' }}
+                @else
+                    {{ $transaction->montant }} <!-- Pour les autres types, afficher sans signe -->
+                @endif
+                               </span>
                     </div>
                     <ul>
-                        <li>{{ $transaction->date }}</li>
+                        {{ $transaction->date }} 
                     </ul>
                 </div>
             @endforeach
@@ -54,17 +63,40 @@
 
         <!-- SOLDE -->
         <div class="solde">
-        <i class="fas fa-eye toggle-button" id="toggle"></i>
-            <span class="montant" id="montant">*********** </span>
-            
-        </div>
+    <i class="fas fa-eye toggle-button" id="toggle" onclick="toggleSolde()"></i>
+    <span class="montant" id="montant">***********</span>
+    <span class="montant-visible" id="montant-visible" style="display: none;">{{ $solde }} FCFA</span>
+</div>
+
+<script>
+    function toggleSolde() {
+        // Sélection des éléments avec les montants caché et visible
+        const montant = document.getElementById('montant');
+        const montantVisible = document.getElementById('montant-visible');
+        const toggleIcon = document.getElementById('toggle');
+
+        // Toggle entre le montant caché et visible
+        if (montant.style.display === 'none') {
+            montant.style.display = 'inline'; // Afficher les étoiles
+            montantVisible.style.display = 'none'; // Cacher le montant réel
+            toggleIcon.classList.replace('fa-eye-slash', 'fa-eye'); // Changer l'icône pour "voir"
+        } else {
+            montant.style.display = 'none'; // Cacher les étoiles
+            montantVisible.style.display = 'inline'; // Afficher le montant réel
+            toggleIcon.classList.replace('fa-eye', 'fa-eye-slash'); // Changer l'icône pour "cacher"
+        }
+    }
+</script>
+
             <div class="carte1">
                 
+            <img src="{{ $qrCode }}" alt="QR Code du client" class="img-fluid" >  
             </div>
             <button class="btn">TRANSFERER</button>
         </div>
     </div>
 </div>
+
 
 @vite(['/resources/js/client.js'])   
 </body>

@@ -8,7 +8,12 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/css/style.css',
-                'resources/js/charts.js'
+                'resources/js/charts.js',
+                'resources/css/client.css',
+                'resources/js/client.js',
+                'resources/css/distributeur.css',
+                'resources/js/distributeur.js',
+                'resources/css/transactions_agent.css'
             ],
             refresh: true,
         }),

@@ -1,0 +1,128 @@
+body {
+    background-color: #ffffff;
+    margin: 0;
+}
+
+.custom-bg-blue {
+    background-color: #003366;
+}
+
+.historique {
+    min-height: 150px;
+    overflow-y: auto;
+    padding-top: 100px;
+
+
+    
+       
+        padding: 20px;
+        margin-top: 50px; /* Descend la section de 40px */
+        margin-left: -300px; /* Décale de 300px à gauche */
+        width: calc(100% + 300px); /* Étend la largeur de 300px vers la gauche */
+   
+
+
+}
+
+.carte1 {
+    height: 263px;
+}
+
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+   
+}
+
+@media (max-width: 768px) {
+    .nav img {
+        width: 100px;
+    }
+
+    .historique {
+        width: 100%;
+        margin-left: 0;
+        padding-top: 50px;
+        background-color: #fff;
+
+    }
+
+    .historique .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .transaction-info {
+        flex-grow: 1;
+        margin-right: 20px;
+    }
+    
+    .historique h5 {
+        font-size: 15px;
+        margin: 0;
+    }
+    
+    .historique p {
+        font-size: 14px;
+        margin: 0;
+    }
+    
+    .historique .badge {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    .carte1 {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+.solde {
+    font-size: 50px;
+    padding-top: 50px;
+    margin-left: 120px;
+}
+.carte1{
+    background-color: #003366;
+}
+h2 {
+    background-color: #FFA500;
+    text-align: center;
+    height: 75px;
+    text-align: center;
+}
+
+
+
+.historique h5 {
+    font-size: 15px;
+    margin: 0;
+}
+
+.historique p {
+    font-size: 14px;
+    margin: 0;
+}
+
+.historique .badge {
+    font-size: 14px;
+    padding: 8px 12px;
+}
+.btn {
+    background-color: #25CD25;
+    margin-left: 200px;
+    margin-top: 30px;
+    height: 70px;
+    width: 187px;
+    color: #ffffff;
+}

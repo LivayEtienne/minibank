@@ -1,0 +1,109 @@
+body {
+    background-color: #ffffff;
+    margin: 0;
+}
+.container {
+    display: flex;
+
+}
+.historique {
+    background-color: #FFA500;
+    padding: 20px;
+    border: 1px solid #ccc;
+    width: 400px;
+    height: 75px;
+    margin-top: 150px;
+    padding-left: 20px;
+    margin-left: -250px; /* Ajusté pour décaler de 100px à gauche */
+}
+
+.operation {
+    border-radius: 8px; /* Coins arrondis */
+    padding: 40px; /* Espacement interne */
+    text-align: center; /* Centrer le texte */
+    margin-left: 400px; /* Gardez cette valeur si vous souhaitez décaler à gauche */
+    margin-top: -150px; /* Déplace de 100px vers le haut */
+}
+
+
+.operation a {
+    display: inline-block; /* Afficher les liens comme des blocs pour plus de contrôle */
+    margin: 10px; /* Espacement entre les liens */
+    padding: 10px 20px; /* Espacement interne pour les liens */
+    color: #fff; /* Couleur du texte par défaut */
+    border: 1px solid transparent; /* Bordure initialement transparente */
+    border-radius: 5px; /* Coins arrondis pour les liens */
+    text-decoration: none; /* Enlever le soulignement */
+    transition: background-color 0.3s, border-color 0.3s; /* Animation lors du survol */
+    margin-top: 500px;
+    
+}
+
+/* Style pour le lien RETRAIT */
+.operation a.retrait {
+    background-color: #003366; /* Couleur de fond pour le lien RETRAIT */
+    width: 200px;
+    height: 75px;
+    position: relative; /* Positionnement relatif */
+    top: -100px; /* Déplace l'élément de 100px vers le haut */
+}
+
+.operation a.retrait:hover {
+    background-color: #0056b3; /* Couleur de fond au survol pour RETRAIT */
+    border-color: #fff; /* Bordure blanche au survol pour RETRAIT */
+    width: 200px;
+    height: 75px;
+}
+
+/* Style pour le lien DEPOT */
+.operation a.depot {
+    background-color: #25CD25; /* Couleur de fond pour le lien DEPOT */
+    width: 200px;
+    height: 75px;
+    position: relative; /* Positionnement relatif */
+    top: -100px; /* Déplace l'élément de 100px vers le haut */
+   
+}
+
+.operation a.depot:hover {
+    background-color: #1fa11f; /* Couleur de fond au survol pour DEPOT (optionnel) */
+    border-color: #fff; /* Bordure blanche au survol pour DEPOT */
+}
+
+
+
+.nav {
+    background-color: #003366;
+    height: 125px;
+    color: #ffffff;
+    
+}
+
+
+.montant {
+    font-size: 45px;
+}
+.toggle-button {
+    cursor: pointer;
+    margin-left: 10px;
+    
+}
+.solde {
+    margin-top: -300px;
+    
+}
+i {
+    
+    font-size: 75px;
+}
+
+img {
+    margin-left: 1510px;
+    
+}
+.carte {
+    width: 582px;
+    height: 263px;
+    
+    background-color: #003366;
+}

@@ -19,14 +19,15 @@ return new class extends Migration
             $table->string('photo')->nullable(); // Photo
             $table->date('date_naissance'); // Date de naissance
             $table->string('adresse'); // Adresse
-            $table->integer('cni'); // CNI
+            $table->integer('cni')->unique(); // CNI, doit être unique
             $table->enum('role', ['client', 'distributeur', 'agent']); // Rôle
             $table->boolean('statut')->default(false); // Statut (actif ou non)
             $table->date('date_creation')->useCurrent(); // Date de création
-            $table->string('mot_de_passe', 20); // Mot de passe
+            $table->string('mot_de_passe', 60); // Mot de passe (augmenté à 60)
             $table->timestamps(); // Ajoute created_at et updated_at
         });
     }
+
     /**
      * Reverse the migrations.
      */
@@ -35,3 +36,4 @@ return new class extends Migration
         Schema::dropIfExists('users');
     }
 };
+

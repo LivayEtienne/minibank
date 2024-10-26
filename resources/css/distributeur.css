@@ -1,0 +1,40 @@
+/* Barre latérale */
+.sidebar {
+    background-color: #003366;
+    color: white;
+    width: 250px; /* Largeur fixe pour les écrans larges */
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto; /* Pour s'assurer que la barre latérale reste dans les limites si elle est trop longue */
+}
+
+/* Contenu principal */
+.container-fluid {
+    margin-left: 250px; /* Espace laissé pour la barre latérale */
+    padding: 20px;
+    overflow: hidden; /* Pour éviter les débordements */
+}
+
+/* Rendre la mise en page responsive */
+@media screen and (max-width: 768px) {
+    .sidebar {
+        width: 200px; /* Réduire la largeur de la barre latérale sur les petits écrans */
+    }
+    .container-fluid {
+        margin-left: 200px; /* Ajuster en conséquence la marge */
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .sidebar {
+        width: 100%; /* La barre latérale occupera toute la largeur sur les très petits écrans */
+        height: auto; /* Autoriser la barre latérale à s'adapter en hauteur */
+        position: relative; /* Pour éviter qu'elle cache le contenu */
+    }
+    .container-fluid {
+        margin-left: 0; /* Pas de marge à gauche sur les très petits écrans */
+    }
+}
+

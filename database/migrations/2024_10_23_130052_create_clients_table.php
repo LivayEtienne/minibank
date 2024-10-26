@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('clients', function (Blueprint $table) {
             $table->id(); // Identifiant unique
             $table->string('numero_compte')->unique(); // Numéro de compte
-            $table->int('solde')->default(0); // Solde
+            $table->integer('solde')->default(0); // Solde (modifié ici)
             $table->foreignId('id_user')->constrained('users'); // Lien vers la table users
             $table->timestamps(); // Ajoute created_at et updated_at
         });
@@ -27,5 +27,9 @@ return new class extends Migration
     {
         Schema::dropIfExists('clients');
     }
-};
 
+
+
+
+    
+};

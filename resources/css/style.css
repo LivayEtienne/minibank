@@ -60,3 +60,13 @@
 canvas {
     border-radius: 12px; /* Coins arrondis pour le graphique */
 }
+.nav-link {
+    color: #ffffff; /* Couleur par défaut pour les liens */
+}
+
+.nav-link.active {
+    color: #007bff; /* Couleur bleu pour le lien actif */
+    font-weight: bold; /* Optionnel : mettre le texte en gras */
+}
+
+

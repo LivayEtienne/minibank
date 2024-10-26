@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\QRCodeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,8 +28,32 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/qr-code/{id}', [QRCodeController::class, 'generate'])->name('qr.code');
-Route::get('/qr-code/{id}/refresh', [QRCodeController::class, 'getQRCode']);
+
+
+// Autres routes...
+
+Route::get('/transactions/transfer', function () {
+    $distributeurs = \App\Models\User::where('role', 'distributeur')->get(); // Récupérer les distributeurs
+    return view('transaction', compact('distributeurs'));
+})->name('transactions.transferForm');
+
+Route::post('/transactions/transfer', [TransactionController::class, 'transferFromAgentToDistributeur'])
+    ->name('transactions.transferToDistributeur');
+
+// Route pour afficher le formulaire de dépôt et retrait
+Route::get('/distributeur/operations', function () {
+    $clients = \App\Models\User::where('role', 'client')->get(); // Récupérer les clients
+    return view('transaction', compact('clients'));
+})->name('distributeur.operations');
+
+// Route pour le dépôt
+Route::post('/distributeur/depot', [TransactionController::class, 'transferFromDistributeurToClient'])
+    ->name('distributeur.depot');
+
+// Route pour le retrait
+Route::post('/distributeur/retrait', [TransactionController::class, 'withdrawForDistributeur'])
+    ->name('distributeur.retrait');
+
 
 require __DIR__.'/auth.php';
 

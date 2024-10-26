@@ -21,12 +21,12 @@ class User extends Authenticatable
         'cni',
         'role',
         'statut',
-        'mot_de_passe',
+        'password',
     ];
 
     // Si vous utilisez des champs cachés, ajoutez-les ici
     protected $hidden = [
-        'mot_de_passe',
+        'password',
         'remember_token',
     ];
 
@@ -36,5 +36,9 @@ class User extends Authenticatable
         'statut' => 'boolean',
     ];
 
-    // Vous pouvez ajouter d'autres méthodes si nécessaire
+    
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'id_compte_source');
+    }
 }

@@ -10,8 +10,12 @@ export default defineConfig({
                 'resources/js/charts.js',
                 'resources/css/connexion.css',
                 'resources/css/style.css',
-                'resources/js/connexion.js',
-                'resources/assets/door.jpg'
+                'resources/js/charts.js',
+                'resources/css/client.css',
+                'resources/js/client.js',
+                'resources/css/distributeur.css',
+                'resources/js/distributeur.js',
+                'resources/css/transactions_agent.css'
             ],
             refresh: true,
         }),

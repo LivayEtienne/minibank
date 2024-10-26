@@ -121,4 +121,12 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'Utilisateur supprimé avec succès.');
     }
+
+    public static function show($id){
+        // Récupérer l'utilisateur par son ID
+        $user = User::find($id);
+
+        // Passer les données à la vue
+        return $user;
+    }
 }

@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    width: 100%; /* Augmenter la largeur maximale du conteneur */
+    max-width: 900px; /* Augmentez la largeur pour mieux afficher les champs côte à côte */
     margin: 50px auto;
     padding: 20px;
     background: white;
@@ -14,23 +14,32 @@ body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.loyout{
-    width: 100%;
-}
-
 /* Style des lignes du formulaire */
 .form-row {
     display: flex;
+    flex-wrap: wrap; /* Ajoutez cette propriété pour gérer les lignes flexibles */
     justify-content: space-between;
     margin-bottom: 15px;
+    padding: 2px 20px;
+}
+
+/* Style des groupes de champs */
+.form-group {
+    width: 48%; /* Ajuste la largeur des champs pour être sur la même ligne */
+    margin-bottom: 15px;
+}
+
+/* Style des groupes de champs de ligne complète */
+.form-group.full-width {
+    width: 100%; /* Permet à certains champs d'occuper toute la largeur */
 }
 
 /* Style des champs d'entrée */
 .form-control {
-    width: 100%;
+    width: 100%; /* Laissez chaque champ prendre toute la largeur du conteneur .form-group */
     padding: 12px;
     border: 1px solid #ced4da;
-    border-radius: 4px;
+    border-radius: 20px; /* Changer le rayon de bordure à 20px */
     font-size: 16px;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
@@ -66,4 +75,26 @@ body {
 
 .underline:hover {
     color: #0056b3;
+}
+
+.d-flex {
+    display: flex;                  /* Utiliser Flexbox */
+    justify-content: space-between; /* Espacer les boutons */
+    align-items: center;           /* Centrer verticalement les éléments */
+}
+
+.btn {
+    padding: 10px 20px;            /* Ajouter un padding pour rendre les boutons plus jolis */
+    border-radius: 5px;            /* Ajouter des coins arrondis */
+    text-align: center;             /* Centrer le texte dans le bouton */
+    text-decoration: none;          /* Supprimer le soulignement du lien */
+}
+
+.btn-primary {
+    background-color: #007bff;     /* Couleur de fond du bouton */
+    color: white;                   /* Couleur du texte */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;      /* Couleur de fond au survol */
 }

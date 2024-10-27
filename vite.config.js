@@ -8,8 +8,12 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/css/style.css',
-                'resources/js/charts.js',
-                'resources/css/create_compte.css'
+                'resources/js/chart.js',
+                'resources/css/create_compte.css',
+                'resources/css/affichage.css',
+                'resources/js/chart.js',
+                'resources/js/confirmation.js',
+                'resources/js/list_client.js'
             ],
             refresh: true,
         }),

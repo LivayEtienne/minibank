@@ -96,6 +96,7 @@ class UserController extends Controller
         $user->adresse = $request->adresse;
         $user->cni = $request->cni;
         $user->role = $request->role;
+        $user->role = $request->status;
 
         // Hachage du mot de passe si fourni
         if ($request->filled('mot_de_passe')) {

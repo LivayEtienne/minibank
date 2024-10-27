@@ -6,13 +6,17 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\StatistiqueController;
-
+use App\Http\Controllers\AuthController;
 Route::get('/', function () {
     return view('welcome');
 });
 
+// Route pour afficher le formulaire de connexion (GET)
+Route::get('/connexion', [AuthController::class, 'showLoginForm'])->name('login');
 
-// Route pour afficher le formulaire d'inscription
+// Route pour traiter la connexion (POST)
+Route::post('/connexion', [AuthController::class, 'login'])->name('connexion');
+
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('auth.register');
 
 // Route pour soumettre le formulaire d'inscription

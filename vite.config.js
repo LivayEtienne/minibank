@@ -13,7 +13,8 @@ export default defineConfig({
                 'resources/css/affichage.css',
                 'resources/js/chart.js',
                 'resources/js/confirmation.js',
-                'resources/js/list_client.js'
+                'resources/js/list_client.js',
+                'resources/css/connexion.css'
             ],
             refresh: true,
         }),

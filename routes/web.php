@@ -11,6 +11,33 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+use App\Http\Controllers\agentController;
+
+
+Route::get('/', function () {
+    return view('welcome');
+
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('agent.dashboard');
+
+// Route pour afficher le dashboard du client
+
+Route::get('/client', [\App\Http\Controllers\ClientController::class, 'index']);
+
+
+// Route pour afficher le dashboard du distributeur
+
+Route::get('distributeur', function () {
+    return view('distributeur');
+});
+
+
+//Route pour afficher la liste des transactions de l agent
+
+
+Route::get('/index', [DashboardController::class, 'index'])->name('dashboard');
+
+
 // Route pour afficher le formulaire de connexion (GET)
 Route::get('/connexion', [AuthController::class, 'showLoginForm'])->name('login');
 

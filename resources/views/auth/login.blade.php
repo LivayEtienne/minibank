@@ -1,87 +1,70 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface de Connexion</title>
+    <!-- Lien vers Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    @vite(['resources/css/connexion.css'])
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="row w-100">
+            <!-- Section gauche : Connexion -->
+            <div class="col-md-7 d-flex flex-column justify-content-start p-5 bg-light shadow-sm rounded-start">
+                <div class="text-center mb-4">
+                    <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="img-fluid" style="max-width: 150px;">
+                </div>
+                <h2 class="text-center mb-4">Connexion</h2>
+                
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-    <form method="POST" action="{{ route('login') }}" enctype="multipart/form-data">
-        @csrf
+                <form id="loginForm" method="POST" action="{{ route('login') }}">
+                    @csrf <!-- Ajoutez le token CSRF pour la sécurité -->
+                    
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="telephone" 
+                               placeholder="Veuillez entrer votre numéro" 
+                               value="{{ old('telephone') }}" required>
+                        <div id="telephoneError" class="text-danger" style="display:none;"></div>
+                    </div>
 
-        <!-- Nom -->
-        <div>
-            <x-input-label for="nom" :value="__('Nom')" />
-            <x-text-input id="nom" class="block mt-1 w-full" type="text" name="nom" :value="old('nom')" required autofocus />
-            <x-input-error :messages="$errors->get('nom')" class="mt-2" />
+                    <div class="mb-3">
+                        <input type="password" class="form-control" name="password" 
+                               placeholder="Veuillez entrer votre mot de passe" required>
+                        <div id="passwordError" class="text-danger" style="display:none;"></div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-dark">Se Connecter</button>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="#" class="text-muted">Mot de passe oublié?</a>
+                    </div>
+                </form>
+            </div>
         </div>
 
-        <!-- Prénom -->
-        <div class="mt-4">
-            <x-input-label for="prenom" :value="__('Prénom')" />
-            <x-text-input id="prenom" class="block mt-1 w-full" type="text" name="prenom" :value="old('prenom')" required />
-            <x-input-error :messages="$errors->get('prenom')" class="mt-2" />
+        <!-- Section droite : Bienvenue -->
+        <div class="col-md-5 d-none d-md-flex flex-column justify-content-end align-items-center bg-light bg-gradient rounded-end">
+            <h1 class="display-4 mb-5">BIENVENUE</h1>
+            <img src="{{ asset('images/door.jpg') }}" alt="Illustration" class="img-fluid" style="max-width: 80%;">
         </div>
+    </div>
 
-        <!-- Adresse -->
-        <div class="mt-4">
-            <x-input-label for="adresse" :value="__('Adresse')" />
-            <x-text-input id="adresse" class="block mt-1 w-full" type="text" name="adresse" :value="old('adresse')" required />
-            <x-input-error :messages="$errors->get('adresse')" class="mt-2" />
-        </div>
+    <!-- Ajoutez le script Vite pour le rendu dynamique -->
+    @vite(['resources/js/connexion.js'])
 
-        <!-- Photo -->
-        <div class="mt-4">
-            <x-input-label for="photo" :value="__('Photo')" />
-            <input id="photo" class="block mt-1 w-full" type="file" name="photo" required />
-            <x-input-error :messages="$errors->get('photo')" class="mt-2" />
-        </div>
-
-        <!-- Date de naissance -->
-        <div class="mt-4">
-            <x-input-label for="date_naissance" :value="__('Date de Naissance')" />
-            <x-text-input id="date_naissance" class="block mt-1 w-full" type="date" name="date_naissance" :value="old('date_naissance')" required />
-            <x-input-error :messages="$errors->get('date_naissance')" class="mt-2" />
-        </div>
-
-        <!-- Numéro de carte -->
-        <div class="mt-4">
-            <x-input-label for="numero_carte" :value="__('Numéro de Carte')" />
-            <x-text-input id="numero_carte" class="block mt-1 w-full" type="text" name="numero_carte" :value="old('numero_carte')" required />
-            <x-input-error :messages="$errors->get('numero_carte')" class="mt-2" />
-        </div>
-
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full"
-                          type="password"
-                          name="password"
-                          required autocomplete="current-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    <!-- Lien vers Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

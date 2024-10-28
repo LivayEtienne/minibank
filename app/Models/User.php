@@ -1,48 +1,75 @@
 <?php
-
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    // Les attributs qui peuvent être assignés en masse
     protected $fillable = [
-        'name',
+        'nom',
+        'prenom',
         'email',
-        'password',
+        'telephone',
+        'photo',
+        'date_naissance',
+        'adresse',
+        'cni',
+        'role',
+        'statut',
+        'date_creation',
+        'mot_de_passe',
+        'archived',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
-        'password',
+        'mot_de_passe',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // Définir les attributs en date ou temps si nécessaire
+    protected $casts = [
+        'date_naissance' => 'date',
+        'statut' => 'boolean',
+    ];
+
+
+
+    
+    // public function transactions(){
+    //      $casts = [
+    //         'date_naissance' => 'date',
+    //         'email_verified_at' => 'datetime',
+    //         'archived' => 'boolean',
+    //     ];
+    // }
+    public function setMotDePasseAttribute($value)
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        $this->attributes['mot_de_passe'] = bcrypt($value);
+    }
+
+    public function scopeArchived($query)
+    {
+        return $query->where('archived', true);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->where('archived', false);
+        //return $query->where('archived', false);
+    }
+
+    
+    public function scopeFilterByRole($query, $role)
+    {
+        if ($role !== 'all') {
+            return $query->where('role', $role);
+        }
+
+        return $query;
     }
 }

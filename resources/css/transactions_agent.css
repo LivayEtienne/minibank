@@ -1,0 +1,149 @@
+
+
+/* Barre latérale */
+.sidebar {
+    background-color: red;
+    height: 100vh;
+    padding: 10px;
+}
+
+.sidebar h4 {
+    text-align: left; /* Alignement à gauche du titre */
+    padding-bottom: 20px;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row; /* Les éléments en ligne */
+    justify-content: space-around; /* Espacement entre les éléments */
+}
+
+.nav-item {
+    margin:  10px; /* Ajout d'un espacement horizontal */
+}
+
+.nav-link {
+    padding: 10px ;
+    font-size: 1.2rem;
+    text-align: center; /* Alignement du texte au centre */
+    
+    border-radius: 5px;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+
+table {
+    
+    margin-left: 400px;
+    width: 100%;
+    margin-top: 100px;
+  
+    
+}
+h1 {
+    color: black;
+    padding-top: -700px;
+    margin-top: -900px;
+    margin-left: 400px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Barre latérale */
+.sidebar {
+    background-color:  #0d2b4c;
+    height: 100vh;
+    padding: 20px;
+    width: 300px;
+}
+
+.sidebar h4 {
+    text-align: center;
+}
+
+.nav-link {
+    padding: 15px 10px;
+    font-size: 1.2rem;
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+}
+
+
+
+.table th, .table td {
+    border-color: #0d2b4c;
+}
+
+
+.table-hover tbody tr:hover {
+    background-color: #0d2b4c;
+    color: #fff;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Navbar */
+.nav {
+    background-color: #0d2b4c;
+    color: #fff;
+    height: 75px;
+}
+
+
+/* Barre latérale */
+.sidebar {
+    background-color:  #0d2b4c;
+    height: 100vh;
+    padding: 20px;
+}
+
+.sidebar h4 {
+    text-align: left; /* Alignement à gauche du titre */
+    padding-bottom: 20px;
+}
+
+.nav-link {
+    padding: 10px 5px;
+    font-size: 1.2rem;
+    text-align: left; /* Alignement à gauche des liens */
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+/* Ajustement de l'espacement vertical */
+.nav-item + .nav-item {
+    margin-top: 15px;
+}

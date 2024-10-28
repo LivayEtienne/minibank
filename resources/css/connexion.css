@@ -1,0 +1,44 @@
+body {
+    /* Création d'un fond avec deux couleurs */
+    background: linear-gradient(60deg, #003366 35%, #ffffff 35%);
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    z-index: 1; /* S'assurer que le contenu est au-dessus du fond */
+}
+
+.bg-gradient {
+    background: none; /* Supprimer le background par défaut de la section de droite */
+}
+
+.custom-form {
+    width: 622px;          
+    height: 617px;        
+    border-radius: 15px;  
+    padding: 20px;        
+    background-color: white; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+}
+
+h1, h2 {
+    color: #333;
+}
+
+.valid {
+    border: 2px solid green;
+}
+
+.invalid {
+    border: 2px solid red;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+

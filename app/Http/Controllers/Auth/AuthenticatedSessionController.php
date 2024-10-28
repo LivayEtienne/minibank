@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -24,11 +23,23 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        $request->authenticate(); // Authentification de l'utilisateur
 
-        $request->session()->regenerate();
+        $request->session()->regenerate(); // Regénérer la session pour éviter les attaques de fixation de session
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user(); // Récupérer l'utilisateur authentifié
+  
+        // Rediriger en fonction du rôle
+       switch ($user->role) {
+            case 'agent':
+                return redirect()->route('agent.dashboard'); // Redirection vers le tableau de bord agent
+            case 'client':
+                return redirect()->route('client.dashboard'); // Redirection vers le tableau de bord client
+            case 'distributeur':
+                return redirect()->route('distributeur.dashboard'); // Redirection vers le tableau de bord distributeur
+            default:
+                return redirect()->intended('home'); // Redirection par défaut
+        }
     }
 
     /**
@@ -39,9 +50,8 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/auth/login');
     }
 }

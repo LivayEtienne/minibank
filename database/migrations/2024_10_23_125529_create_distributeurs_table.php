@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,7 @@ return new class extends Migration
             $table->id(); // Identifiant unique
             $table->string('numero_compte')->unique(); // Numéro de compte
             $table->foreignId('id_user')->constrained('users'); // Lien vers la table users
-            $table->int('solde'); // Solde
+            $table->decimal('solde', 10, 2)->default(0); // Solde (utiliser decimal pour gérer les valeurs monétaires)
             $table->decimal('bonus', 10, 2)->default(0); // Bonus
             $table->timestamps(); // Ajoute created_at et updated_at
         });

@@ -21,7 +21,7 @@ class distributeurController extends Controller
             ->orderBy('created_at', 'desc') // Trier par date décroissante
             ->paginate(10);
         
-        return view('distributeur', compact('transactions', 'solde'));
+        return view('distributeur', compact('transactions', 'solde', 'user'));
     }
 
     public function getSolde() {

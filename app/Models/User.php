@@ -37,14 +37,16 @@ class User extends Authenticatable
         'statut' => 'boolean',
     ];
 
+
+
     
-    public function transactions(){
-         $casts = [
-            'date_naissance' => 'date',
-            'email_verified_at' => 'datetime',
-            'archived' => 'boolean',
-        ];
-    }
+    // public function transactions(){
+    //      $casts = [
+    //         'date_naissance' => 'date',
+    //         'email_verified_at' => 'datetime',
+    //         'archived' => 'boolean',
+    //     ];
+    // }
     public function setMotDePasseAttribute($value)
     {
         $this->attributes['mot_de_passe'] = bcrypt($value);
@@ -57,10 +59,11 @@ class User extends Authenticatable
 
     public function scopeActive($query)
     {
-        return $this->hasMany(Transaction::class, 'id_compte_source');
+        return $query->where('archived', false);
         //return $query->where('archived', false);
     }
 
+    
     public function scopeFilterByRole($query, $role)
     {
         if ($role !== 'all') {

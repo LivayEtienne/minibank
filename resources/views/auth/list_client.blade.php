@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Clients</title>
+    <title>Listes</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/affichage.css'])
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- CSS de Bootstrap -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
@@ -20,7 +22,7 @@
     @endif
 
     <div class="container">
-        <h1>Liste des Clients</h1>
+        <h1>Affichages des Listes</h1>
 
         <!-- Formulaire de filtrage par rôle -->
         <form method="GET" action="{{ route('clients.index') }}" class="mb-3">
@@ -28,7 +30,7 @@
                 <label for="role">Filtrer par rôle :</label>
                 <select name="role" id="role" class="form-control" onchange="this.form.submit()">
                     <option value="all" {{ request('role') === 'all' ? 'selected' : '' }}>Tous</option>
-                    <option value="administrateur" {{ request('role') === 'administrateur' ? 'selected' : '' }}>Administrateurs</option>
+                    <option value="distributeur" {{ request('role') === 'distributeur' ? 'selected' : '' }}>Distributeurs</option>
                     <option value="client" {{ request('role') === 'client' ? 'selected' : '' }}>Clients</option>
                 </select>
             </div>
@@ -40,7 +42,7 @@
                     <th>Photo</th>
                     <th>Nom</th>
                     <th>Prénom</th>
-                    <th>Email</th>
+                    <th>Role</th>
                     <th>Téléphone</th>
                     <th>Actions</th>
                 </tr>
@@ -48,7 +50,7 @@
             <tbody>
                 @if($activeClients->isEmpty())
                     <tr>
-                        <td colspan="6" class="text-center">Aucun client trouvé.</td>
+                        <td colspan="6" class="text-center">Aucun Utilisateur trouvé.</td>
                     </tr>
                 @else
                     @foreach($activeClients as $client)
@@ -62,18 +64,45 @@
                             </td>
                             <td>{{ $client->nom }}</td>
                             <td>{{ $client->prenom }}</td>
-                            <td>{{ $client->email }}</td>
+                            <td>{{ $client->role }}</td>
                             <td>{{ $client->telephone }}</td>
                             <td>
                                 <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-warning">Modifier</a>
-                                <button type="button" class="btn btn-danger" onclick="archiveClient({{ $client->id }})">Archiver</button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#archiveModal" onclick="setArchiveClientId('{{ $client->id }}')">
+                                    Archiver
+                                </button>
+
+                                <!-- Formulaire d'archivage (caché) -->
                                 <form id="archiveForm-{{ $client->id }}" action="{{ route('clients.archive', $client->id) }}" method="POST" style="display: none;">
                                     @csrf
                                 </form>
+
                             </td>
                         </tr>
                     @endforeach
                 @endif
+
+                <!-- Modal de Confirmation -->
+<div class="modal fade" id="archiveModal" tabindex="-1" role="dialog" aria-labelledby="archiveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="archiveModalLabel">Confirmer l'Archivage</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Êtes-vous sûr de vouloir archiver ce client ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-danger" id="confirmArchive">Archiver</button>
+            </div>
+        </div>
+    </div>
+</div>
+
             </tbody>
         </table>
 
@@ -81,13 +110,36 @@
         {{ $activeClients->links() }} <!-- Ajoute la pagination si nécessaire -->
     </div>
 
-    <script>
+<!-- JS de Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
         function archiveClient(clientId) {
             const form = document.getElementById('archiveForm-' + clientId);
             if (confirm('Êtes-vous sûr de vouloir archiver ce client ?')) {
                 form.submit();
             }
         }
-    </script>
+
+        let clientIdToArchive = null;
+
+// Fonction pour définir l'ID du client à archiver
+    function setArchiveClientId(clientId) {
+        clientIdToArchive = clientId;
+    }
+
+    // Fonction pour confirmer l'archivage
+    document.getElementById('confirmArchive').addEventListener('click', function() {
+        if (clientIdToArchive) {
+            // Soumettre le formulaire correspondant à l'ID du client
+            document.getElementById(`archiveForm-${clientIdToArchive}`).submit();
+        }
+        // Fermer le modal
+        $('#archiveModal').modal('hide');
+    });
+
+</script>
 </body>
 </html>

@@ -41,13 +41,6 @@
                     <div class="prenom-error text-danger"></div>
                 </div>
 
-                <!-- Champ Email -->
-                <div class="form-group">
-                    <label for="email">Email :</label>
-                    <input type="email" name="email" class="form-control" value="{{ old('email', $client->email) }}" required>
-                    <div class="email-error text-danger"></div>
-                </div>
-
                 <!-- Champ Téléphone -->
                 <div class="form-group">
                     <label for="telephone">Téléphone :</label>

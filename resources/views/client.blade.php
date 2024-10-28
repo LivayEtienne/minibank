@@ -25,37 +25,36 @@
     <div class="row">
         <!-- Historique Section -->
         <div class="col-md-4 mb-4">
-    <div class="historique">
-        <h2 class="text-center">HISTORIQUES</h2>
-        @if ($transactions->isEmpty())
-            <p>Aucune transaction</p>
-        @else
-            @foreach($transactions as $transaction)
-                <div class="list-group-item mb-2">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <!-- Prénom et Nom sur la même ligne -->
-                        <div class="transaction-info">
-                            <h5 class="mb-0"> <span>{{ $transaction->prenom_source }} {{ $transaction->nom_source }} {{ $transaction->telephone }}</span></h5>
-                            {{ $transaction->type }}
-                        </div>
-                        <!-- Montant aligné à droite -->
-                        <span>
-                        @if ($transaction->type == 'depot')
-                    +{{ $transaction->montant }}
-                @elseif ($transaction->type == 'retrait' || $transaction->type == 'envoi')
-                    -{{ $transaction->montant .'F' }}
-                @else
-                    {{ $transaction->montant }} <!-- Pour les autres types, afficher sans signe -->
+        <div class="col-md-4 mb-4">
+            <div class="historique">
+                <h2 class="text-center">HISTORIQUES</h2>
+                @if (empty($transactions))
+                    <p>Aucune transaction enregistrée.</p>
                 @endif
-                               </span>
-                    </div>
-                    <ul>
-                        {{ $transaction->date }} 
-                    </ul>
-                </div>
-            @endforeach
-        @endif
-    </div>
+                    @foreach($transactions as $transaction)
+                        <div class="list-group-item mb-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="transaction-info">
+                                    <h5 class="mb-0"> <span>{{ $transaction->prenom_source }} {{ $transaction->nom_source }} {{ $transaction->telephone }}</span></h5>
+                                    {{ $transaction->type }}
+                                </div>
+                                <span>
+                                @if ($transaction->type == 'depot')
+                                    +{{ $transaction->montant }}
+                                @elseif ($transaction->type == 'retrait' || $transaction->type == 'envoi')
+                                    -{{ $transaction->montant .'F' }}
+                                @else
+                                    {{ $transaction->montant }}
+                                @endif
+                                </span>
+                            </div>
+                            <ul>
+                                {{ $transaction->date }} 
+                            </ul>
+                        </div>
+                    @endforeach
+                
+            </div>
 </div>
 
 

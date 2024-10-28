@@ -401,9 +401,10 @@ class TransactionController extends Controller
         if ($client->solde < $request->montant + $frais) {
             return redirect()->back()->with('error', 'Solde insuffisant après application des frais.');
         
-    
+        }
+
         // Logique de transfert
-        $client->solde -= $request->montant ; // Déduit le montant du client
+        $client->solde -= $request->montant; // Déduit le montant du client
         $distributeur->solde += $request->montant + $frais; // Ajoute le montant au distributeur
         $client->save();
         $distributeur->save();
@@ -418,7 +419,7 @@ class TransactionController extends Controller
             'frais' => $frais,
         ]);
     
-        return redirect('distributeur/dashboard')->with('success', 'Retrait effectué avec succès.');
+        return redirect()->back()->with('success', 'Retrait effectué avec succès.');
     }
     }
     // Envoi Client → Client
@@ -458,4 +459,3 @@ class TransactionController extends Controller
 
         return redirect()->back()->with('success', 'Transfert effectué avec succès.');
     }*/
-}

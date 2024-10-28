@@ -24,19 +24,19 @@
         <h5>Menu</h5>
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" href="{{ route('dashboard') }}">
+                <a class="nav-link active" href="{{ route('agent.dashboard') }}">
                     <i class="fas fa-home"></i> Accueil
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-light" href="#">
-                    <i class="fas fa-users"></i> Utilisateurs
+                    <i class="fas fa-coins"></i> Transactions
                 </a>
             </li>
             <!-- Ajoutez ici d'autres éléments du menu si nécessaire -->
             <li class="nav-item">
                 <a class="nav-link text-light" href="{{ route('clients.index') }}">
-                    <i class="fas fa-users"></i> Clients
+                    <i class="fas fa-users"></i> Listes
                 </a>
             </li>
             <!-- Ajoutez d'autres éléments de menu si besoin -->
@@ -45,6 +45,12 @@
                     <i class="fas fa-users"></i> liste des archivés
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" href="{{ route('logout')}}" onmouseover="this.classList.add('bg-primary');" onmouseout="this.classList.remove('bg-primary');">
+                            <i class="fas fa-credit-card"></i> Deconnexion
+                </a>
+            </li> 
+            
         </ul>
     </div>
 

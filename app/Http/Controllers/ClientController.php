@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Client; // Assurez-vous d'importer le bon modèle
@@ -6,10 +7,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
-
-
 
 class ClientController extends Controller
 {

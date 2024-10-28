@@ -15,7 +15,7 @@
         <h1>MINIBANK</h1>
         <img src="{{ Vite::asset('resources/image/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 150px; height: auto;">
         <a class="nav-link text-light" href="{{ route('logout')}}" onmouseover="this.classList.add('bg-primary');" onmouseout="this.classList.remove('bg-primary');">
-            <i class="fas fa-credit-card"></i> Deconnexion
+                        <i class="fas fa-credit-card"></i> Deconnexion
         </a>
     </div>
 </div>
@@ -24,37 +24,28 @@
 <div class="container mt-4">
     <div class="row">
         <!-- Historique Section -->
-        <div class="col-md-4 mb-4">
+        <div class="col-md-3 mb-4">
     <div class="historique">
-        <h2 class="text-center">HISTORIQUES</h2>
-        @if ($transactions->isEmpty())
-            <p>Aucune transaction</p>
-        @else
-            @foreach($transactions as $transaction)
-                <div class="list-group-item mb-2">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <!-- Prénom et Nom sur la même ligne -->
-                        <div class="transaction-info">
-                            <h5 class="mb-0"> <span>{{ $transaction->prenom_source }} {{ $transaction->nom_source }} {{ $transaction->telephone }}</span></h5>
-                            {{ $transaction->type }}
-                        </div>
-                        <!-- Montant aligné à droite -->
-                        <span>
-                        @if ($transaction->type == 'depot')
-                    +{{ $transaction->montant }}
-                @elseif ($transaction->type == 'retrait' || $transaction->type == 'envoi')
-                    -{{ $transaction->montant .'F' }}
-                @else
-                    {{ $transaction->montant }} <!-- Pour les autres types, afficher sans signe -->
-                @endif
-                               </span>
+        <h2 class="text-center">TRANSFER</h2>
+        <div class="col-md-5 mb-3">
+            <div class="mt-5 justify-content-center">
+                <form action="{{ route('transaction.transfer')}}" method="POST">
+                    @csrf
+                    <div class="mt-5 justify-content-center">
+                        <label for="telephone">Entrer le numero du Client</label>
+                        <input type="number" name="telephone" placeholder="Entrer le numero" required>
                     </div>
-                    <ul>
-                        {{ $transaction->date }} 
-                    </ul>
-                </div>
-            @endforeach
-        @endif
+                    <div class="mt-5 justify-content-center">
+                        <label for="montant">Entrer le montant a Transferer</label>
+                        <input type="number" name="montant" placeholder="Entrer le montant" min="500" required >
+                    </div>
+                    <div class="mt-5 justify-content-center">
+                        <button>Annuler</button>
+                        <button type="submit" class="ml-5 " >Valider</button> 
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -95,7 +86,7 @@
                 
             <img src="{{ $qrCode }}" alt="QR Code du client" class="img-fluid" >  
             </div>
-            <a href="{{ route('transactions.transfer') }}"><button class="btn">TRANSFERER</button></a>
+            <button class="btn">TRANSFERER</button>
         </div>
     </div>
 </div>

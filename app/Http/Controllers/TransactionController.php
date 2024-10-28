@@ -11,6 +11,8 @@ use App\Models\Transaction; // Assurez-vous d'importer le modèle Transaction
 
 class TransactionController extends Controller
 {
+
+  
     // Crédits d'un Distributeur par l'agent
     public function transferFromAgentToDistributeur(Request $request)
     {
@@ -47,13 +49,17 @@ class TransactionController extends Controller
     {
         $request->validate([
             'montant' => 'required|numeric|min:500',
-            'client_id' => 'required|exists:users,id',
+            'telephone' => 'required|exists:users,telephone',
         ]);
 
 
-        $distributeur = Distributeurs::where('id', 1)->first();
-        //$distributeur = Auth::user();
-        $client = Client::where('id_user', $request->client_id)-> first();
+        //$distributeur = Distributeurs::where('te', 1)->first();
+        $user0 = Auth::user();
+        $distributeur = Distributeurs::where('id_user', $user0->id)->first();
+
+        $user = User::where('telephone', $request->telephone)-> first();
+        $client = Client::where('id_user', $user->id)->first();
+
         $frais = $request->montant * 0.01; // Calcul des frais
 
         if ($distributeur->solde < $request->montant) {
@@ -84,12 +90,16 @@ class TransactionController extends Controller
     {
         $request->validate([
             'montant' => 'required|numeric|min:500',
-            'client_id' => 'required|exists:users,id',
+            'telephone' => 'required|exists:users,telephone',
         ]);
 
-        $distributeur = Distributeurs::where('id', 1)->first();
-        //$distributeur = Auth::user();
-        $client = Client::where('id_user', $request->client_id)-> first(); 
+        //$distributeur = Distributeurs::where('id', 1)->first();
+        $user0 = Auth::user();
+        $distributeur = Distributeurs::where('id_user', $user0->id)->first();
+
+        $user1 = User::where('telephone', $request->telephone)-> first(); 
+        $client = Client::where('id_user', $user1->id)->first();
+        
         // Calcul des frais (1 % du montant)
         $frais = $request->montant * 0.01;
     
@@ -114,7 +124,7 @@ class TransactionController extends Controller
             'frais' => $frais,
         ]);
     
-        return redirect()->back()->with('success', 'Retrait effectué avec succès.');
+        return redirect('distributeur/dashboard')->with('success', 'Retrait effectué avec succès.');
     }
 
     // Envoi Client → Client
@@ -122,27 +132,30 @@ class TransactionController extends Controller
     {
         $request->validate([
             'montant' => 'required|numeric|min:500',
-            'client_id' => 'required|exists:users,id', // Assurez-vous que la table est correcte
+            'telephone' => 'required|exists:users,telephone', // Assurez-vous que la table est correcte
         ]);
 
-        $clientFrom = Auth::user();
-        $clientTo = User::find($request->client_id);
+        $userFrom = Auth::user();
+        $clientFrom = Client::where('id_user', $userFrom->id)->first();
+
+        $user = User::where('telephone',$request->telephone)->first();
+        $clientTo = Client::where('id_user', $user->id)->first();
 
         // Calcul des frais (2 % du montant)
         $frais = $request->montant * 0.02;
 
-        if ($clientFrom->compte->solde < $request->montant + $frais) {
+        if ($clientFrom->solde < $request->montant + $frais) {
             return redirect()->back()->with('error', 'Solde insuffisant.');
         }
 
-        $clientFrom->compte->solde -= $request->montant + $frais;
-        $clientTo->compte->solde += $request->montant;
-        $clientFrom->compte->save();
-        $clientTo->compte->save();
+        $clientFrom->solde -= $request->montant + $frais;
+        $clientTo->solde += $request->montant;
+        $clientFrom->save();
+        $clientTo->save();
 
         Transaction::create([
-            'id_compte_source' => $clientFrom->compte->id,
-            'id_compte_destinataire' => $clientTo->compte->id,
+            'id_compte_source' => $clientFrom->id,
+            'id_compte_destinataire' => $clientTo->id,
             'id_distributeur' => null, // Pas de distributeur impliqué ici
             'montant' => $request->montant,
             'type' => 'envoi',

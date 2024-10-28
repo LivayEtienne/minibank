@@ -1,14 +1,12 @@
 <?php
 
 
-
-
-
-
 namespace App\Http\Controllers;
 
+use App\Models\Agent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class agentController extends Controller
 {
@@ -50,5 +48,16 @@ class agentController extends Controller
         // Passer les données à la vue transactions_agent
         return view('transactions_agent', ['transactions' => $transactions]);
     }
+
+
+    public function getSolde() {
+//-
+        // Logique pour recupérer le solde//-
+        $agent = Auth::user()->id;//-
+        $agent = Auth::id(); // Use Auth::id() instead of Auth::user()->id//+
+        $solde = Agent::where('id_user', $agent)->first()->solde;
+        return $solde;
+    }
+
 }
 

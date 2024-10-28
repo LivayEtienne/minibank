@@ -1,5 +1,3 @@
-
-
 /*
 
 // Script pour masquer/démasquer le montant
@@ -35,6 +33,11 @@ function toggleSolde() {
         toggleIcon.classList.replace('fa-eye', 'fa-eye-slash'); // Changer l'icône pour "cacher"
     }
 }
+
+document.getElementById('clientForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Empêche le rechargement de la page
+    // Appeler la fonction pour récupérer les données ici
+});
  /*
 <script>
     function toggleSolde() {

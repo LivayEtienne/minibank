@@ -28,11 +28,11 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate(); // Regénérer la session pour éviter les attaques de fixation de session
 
         $user = Auth::user(); // Récupérer l'utilisateur authentifié
-
+  
         // Rediriger en fonction du rôle
-        switch ($user->role) {
+       switch ($user->role) {
             case 'agent':
-                return redirect()->route('agent/dashboard'); // Redirection vers le tableau de bord agent
+                return redirect()->route('agent.dashboard'); // Redirection vers le tableau de bord agent
             case 'client':
                 return redirect()->route('client.dashboard'); // Redirection vers le tableau de bord client
             case 'distributeur':

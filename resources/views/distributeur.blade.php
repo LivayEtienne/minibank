@@ -12,19 +12,47 @@
 
     <div class="nav d-flex justify-content-between align-items-center p-3">
         <h1 class="text-white">MINIBANK</h1>
-        <img src="{{ Vite::asset('resources/image/logo.png') }}" alt="Logo" class="img-fluid" style="max-width: 150px; height: auto;">
+        <img src="{{ asset('images/logo.jpg') }}" alt="Logo" class="img-fluid" style="max-width: 150px; height: auto;" />
+        <a class="nav-link text-light" href="{{ route('logout')}}" onmouseover="this.classList.add('bg-primary');" onmouseout="this.classList.remove('bg-primary');">
+                        <i class="fas fa-credit-card"></i> Deconnexion
+        </a>
     </div>
 
     <div class="container mt-5">
         <div class="row">
             <!-- Section Historique -->
             <div class="col-md-4 mb-3">
-                <div class="historique p-1">
+                <div class="historique">
                     <h2>HISTORIQUES</h2>
-                    <ul>
-                        <!-- Historique peut être ajouté ici -->
-                    </ul>
                 </div>
+                 @if ($transactions->isEmpty())
+                    <p class="mt-5 justify-content-center">Aucune transaction</p>
+                @else
+                    @foreach($transactions as $transaction)
+                        <div class="list-group-item mb-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <!-- Prénom et Nom sur la même ligne -->
+                                <div class="transaction-info">
+                                    <h5 class="mb-0"> <span>{{ $transaction->prenom_source }} {{ $transaction->nom_source }} {{ $transaction->telephone }}</span></h5>
+                                    {{ $transaction->type }}
+                                </div>
+                                <!-- Montant aligné à droite -->
+                                <span>
+                                @if ($transaction->type == 'depot')
+                            +{{ $transaction->montant }}
+                        @elseif ($transaction->type == 'retrait' || $transaction->type == 'envoi')
+                            -{{ $transaction->montant .'F' }}
+                        @else
+                            {{ $transaction->montant }} <!-- Pour les autres types, afficher sans signe -->
+                        @endif
+                                    </span>
+                            </div>
+                            <ul>
+                                {{ $transaction->date }} 
+                            </ul>
+                        </div>
+                    @endforeach
+                @endif
             </div>
 
             <!-- Section Opérations -->
@@ -35,8 +63,8 @@
                         <i class="fas fa-eye toggle-button" id="toggle"></i>
                         <span class="montant" id="montant">*********** </span>
                     </div>
-                    <a class="retrait btn btn-primary m-2" href="#">RETRAIT</a>
-                    <a class="depot btn btn-success m-2" href="#">DEPOT</a>
+                    <a href="{{ route('transactions.depot') }}"><button class="retrait btn btn-primary m-2" >DEPOT</button></a>
+                    <a href="{{ route('transactions.retrait') }}"><button class="depot btn btn-success m-2" >RETRAIT</button></a>
 
                     
                 </div>
@@ -44,6 +72,6 @@
         </div>
     </div>
 
-    @vite(['/resources/js/client.js'])   
+    @vite(['resources/js/client.js'])  
 </body>
 </html>

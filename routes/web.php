@@ -5,6 +5,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\agentController;
+use App\Http\Controllers\distributeurController;
+use App\Http\Controllers\ClientController;
 
 
 Route::get('/', function () {
@@ -17,14 +19,14 @@ Route::get('agent/dashboard', function () {
 
 // Route pour afficher le dashboard du client
 
-Route::get('/client', [\App\Http\Controllers\ClientController::class, 'index']);
+Route::get('/client', [ClientController::class, 'index']);
 
 
 // Route pour afficher le dashboard du distributeur
 
-Route::get('distributeur', function () {
+/*Route::get('distributeur', function () {
     return view('distributeur');
-});
+})->name('distributeur.dashboard');*/
 
 
 //Route pour afficher la liste des transactions de l agent
@@ -43,33 +45,50 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //ROUTE POUR LE DISTRIBUTEUR
+    Route::get('/distributeur/dashboard', [DistributeurController::class, 'index'])->name('distributeur.dashboard');
+
+    //ROUTES POUR LE CLIENT 
+    //ROUTES POUR LE CLIENT 
+    Route::get('client/dashboard', [ClientController::class, 'index'])->name('client.dashboard');
 });
 
+//Les views pour l'interface des transactons du distributeur
+Route::get('/distributeur/depot', function () {
+    return view('transaction/depot');
+})->name('transactions.depot');
+
+Route::get('/distributeur/retrait', function () {
+    $solde = app(distributeurController::class)->getSolde(); 
+
+    return view('transaction/retrait');
+})->name('transactions.retrait');
+
+Route::get('/client/transfer', function () {
+    $qrCode = app(ClientController::class)->generate();
+    $solde = app(ClientController::class)->getSolde(); 
+    
+    return view('transaction/transfer',[ 
+    'qrCode' => 'data:image/png;base64,'. $qrCode,
+    'solde' => $solde // Par défaut, 0 si pas de client trouvé
+    ]);
+})->name('transactions.transfer');
 
 
-// Autres routes...
 
-Route::get('/transactions/transfer', function () {
-    $distributeurs = \App\Models\User::where('role', 'distributeur')->get(); // Récupérer les distributeurs
-    return view('transaction', compact('distributeurs'));
-})->name('transactions.transferForm');
 
-Route::post('/transactions/transfer', [TransactionController::class, 'transferFromAgentToDistributeur'])
-    ->name('transactions.transferToDistributeur');
 
-// Route pour afficher le formulaire de dépôt et retrait
-Route::get('/distributeur/operations', function () {
-    $clients = \App\Models\User::where('role', 'client')->get(); // Récupérer les clients
-    return view('transaction', compact('clients'));
-})->name('distributeur.operations');
+// ROUTE POUR LES TRANSACTIONS
 
 // Route pour le dépôt
-Route::post('/distributeur/depot', [TransactionController::class, 'transferFromDistributeurToClient'])
-    ->name('distributeur.depot');
+Route::post('/distributeur/depot', [TransactionController::class, 'transferFromDistributeurToClient'])->name('transaction.depot');
 
 // Route pour le retrait
-Route::post('/distributeur/retrait', [TransactionController::class, 'withdrawForDistributeur'])
-    ->name('distributeur.retrait');
+Route::post('/distributeur/retrait', [TransactionController::class, 'withdrawForDistributeur'])->name('transaction.retrait');
+
+// Route pour le transfer
+Route::post('/client/transfer', [TransactionController::class, 'sendMoneyToClient'])->name('transaction.transfer');
 
 
 require __DIR__.'/auth.php';

@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-lg" style="background-color: #003366;">
             <a class="navbar-brand" href="#">Tableau de Bord</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon">Deconnexion</span>
             </button>
         </nav>
 
@@ -35,26 +35,6 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#">
                         <i class="fas fa-home"></i> Accueil
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="#" onmouseover="this.classList.add('bg-primary');" onmouseout="this.classList.remove('bg-primary');">
-                        <i class="fas fa-users"></i> Utilisateurs
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="#" onmouseover="this.classList.add('bg-primary');" onmouseout="this.classList.remove('bg-primary');">
-                        <i class="fas fa-box"></i> Produits
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="#" onmouseover="this.classList.add('bg-primary');" onmouseout="this.classList.remove('bg-primary');">
-                        <i class="fas fa-shopping-cart"></i> Commandes
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="#" onmouseover="this.classList.add('bg-primary');" onmouseout="this.classList.remove('bg-primary');">
-                        <i class="fas fa-cogs"></i> Paramètres
                     </a>
                 </li>
                 <li class="nav-item">
@@ -73,8 +53,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#" onmouseover="this.classList.add('bg-primary');" onmouseout="this.classList.remove('bg-primary');">
-                        <i class="fas fa-credit-card"></i> Créditer un Compte
+                    <a class="nav-link text-light" href="{{ route('logout')}}" onmouseover="this.classList.add('bg-primary');" onmouseout="this.classList.remove('bg-primary');">
+                        <i class="fas fa-credit-card"></i> Deconnexion
                     </a>
                 </li>
             </ul>

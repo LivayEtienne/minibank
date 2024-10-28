@@ -107,10 +107,6 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Utilisateur mis à jour avec succès.');
     }
 
-    //Recupere un user
-    public static function show($id){
-        return $user = User::find($id);
-    }
 
     /**
      * Supprime un utilisateur.

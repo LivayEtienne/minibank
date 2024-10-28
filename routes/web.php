@@ -75,7 +75,7 @@ Route::get('/client/transfer', function () {
     ]);
 })->name('transactions.transfer');
 
-
+    
 
 
 

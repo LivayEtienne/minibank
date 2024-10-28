@@ -21,8 +21,6 @@ Route::get('/', function () {
 })->middleware(['auth', 'verified'])->name('agent.dashboard');
 
 
-Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
-Route::post('/transactions/effectuer', [TransactionController::class, 'effectuerTransaction'])->name('transaction.effectuer');
 // Route pour afficher le dashboard du client
 
 Route::get('/client', [\App\Http\Controllers\ClientController::class, 'index']);
@@ -33,10 +31,6 @@ Route::get('/client', [\App\Http\Controllers\ClientController::class, 'index']);
 Route::get('distributeur', function () {
     return view('distributeur');
 });
-
-
-// Dans votre fichier routes/web.php
-Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
 
 //Route pour afficher la liste des transactions de l agent

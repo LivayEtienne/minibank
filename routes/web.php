@@ -4,7 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\agentController;
-
+use App\Http\Controllers\distributeurController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,9 +21,7 @@ Route::get('/client', [\App\Http\Controllers\ClientController::class, 'index']);
 
 // Route pour afficher le dashboard du distributeur
 
-Route::get('distributeur', function () {
-    return view('distributeur');
-});
+Route::get('distributeur', [distributeurController::class, 'index']);
 
 
 //Route pour afficher la liste des transactions de l agent

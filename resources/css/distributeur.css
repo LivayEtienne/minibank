@@ -1,44 +1,110 @@
 body {
     background-color: #ffffff;
     margin: 0;
+    height: 100vh;
 }
-.col-md-4{
-    
-    width: 800px;
-    height: 500px;
-    margin: 0; /* Aligner les marges */
-    
-    box-sizing: border-box; /* Pour inclure padding et bordure dans la taille */
+
+.custom-bg-blue {
+    background-color: #003366;
 }
-/* .historique {
-    margin: 0px;
-    background-color: #FFA500;
-    width: auto;
-    height: 80px; 
-    margin-left: 150px;
-} */
-.col-md-4 {
+
+.historique {
+    min-height: 150px;
+    overflow-y: auto;
+    padding: 20px;
     background-color: #D9D9D9;
-    width: 800px;
-    height: 500px;
-    margin: 0; /* Aligner les marges */
-    margin-left: -150px; /* Décalage si nécessaire */
-    box-sizing: border-box; /* Pour inclure padding et bordure dans la taille */
+    width: 500px;
 }
 
-
-.operation a {
-    display: inline-block;
-    padding: 15px 25px;
-    color: #fff;
-    border-radius: 5px;
-    transition: background-color 0.3s, border-color 0.3s;
+.retrait, .depot {
+    width: 100%; /* Utilise 100% pour que le bouton s'adapte */
+    height: 90px;
 }
 
 .retrait {
     background-color: #003366;
-    width: 250px;
-    height: 90px;
+}
+
+.retrait:hover {
+    background-color: #0056b3;
+    border: none;
+}
+
+.depot {
+    background-color: #25CD25;
+    border: none;
+}
+
+.depot:hover {
+    background-color: #1fa11f;
+}
+
+.solde {
+    font-size: 50px;
+    padding: 50px ;
+    padding-top: 50px;
+}
+
+.carte1 {
+    margin-top: 20px; /* Ajoute un espacement entre la carte et le solde */
+}
+
+button {
+    padding: 10px 0;
+    cursor: pointer;
+   
+}
+
+@media (max-width: 768px) {
+    .nav img {
+        width: 100px;
+    }
+
+    .historique {
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        background-color: #fff;
+        width: 50%;
+    }
+    
+
+    .solde {
+        font-size: 30px; /* Ajuste la taille du texte sur mobile */
+        padding-top: 100px;
+    }
+
+   
+
+    button {
+        width: 100%; /* Les boutons prennent toute la largeur sur mobile */
+        margin-bottom: 10px; /* Ajoute un espacement entre les boutons */
+    }
+}
+
+
+
+
+
+.carte1 {
+    margin-top: 20px; /* Ajoute un espacement entre la carte et le solde */
+}
+
+.button-container {
+    display: flex; /* Utilise Flexbox pour le conteneur de boutons */
+    justify-content: center; /* Centre les boutons horizontalement */
+    gap: 20px; /* Ajoute un espacement entre les boutons */
+}
+
+.retrait, .depot {
+    width: 281px; /* Ajustez la largeur des boutons si nécessaire */
+    height: 100px;
+    margin-left: 35px;
+}
+
+.retrait {
+    background-color: #003366;
+    color: #ffffff;
 }
 
 .retrait:hover {
@@ -47,53 +113,58 @@ body {
 
 .depot {
     background-color: #25CD25;
-    width: 250px;
-    height: 90px;
+    padding: 10px;
+    color: #ffffff;
 }
 
 .depot:hover {
     background-color: #1fa11f;
 }
-
-.nav {
-    background-color: #003366;
-    color: #ffffff;
+.col-md-6 {
+    position: fixed; /* Fixe la colonne */
+    top: 100px; /* Ajustez selon l'espacement souhaité par rapport au haut */
+     /* Fixe la colonne sur le côté droit */
+    padding-top: 100px;
+    margin-left: 300px;
+    height: calc(100vh - 100px); /* Ajuste la hauteur pour qu'elle reste visible */
 }
-
-.montant {
-    font-size: 45px;
-}
-.solde {
-    font-size: 50px;
-    margin-top: -165px; /* Décale vers le haut de 165px */
-}
-.toggle-button {
-    cursor: pointer;
-    margin-left: 10px;
-}
-
 .col-md-4 {
-    margin: 0px;
-    background-color: #D9D9D9;
-    width: 800px;
-    height: 500px;
-    margin-left: -150px;
+    padding-top: 100px; /* Maintient le padding supérieur */
+    margin-left: -275px; /* Ajuste le décalage vers la gauche de 35px */
+   
+    height: 100vh; /* Hauteur de la colonne */
+    width: 35%; /* Largeur de la colonne */
 }
-
-
-    .historique {
-        margin: 0;
-        background-color: #FFA500;
-        width: 500px; /* Largeur totale */
-        height: 80px;
-        padding-right: 300px; /* Espace à droite */
-        box-shadow: 30px 0 0 #FFA500; /* Simule une réduction à droite */
-    }
-
-
-
-.col-md-8 {
+h2{
+    padding-top: 10px;
+    background-color: #FFA500;
+}
+ .fas ,montant {
+    margin-left: 100px;
     padding-top: 150px;
-    margin-left: 50px;
+} 
+.operation{
+    padding-top: 50px;
+    margin-right: 50px;
 
+}
+.span {
+    color: #337fe2;
+    font-size: 20px;
+}
+span{
+    color: #337fe2;
+}
+.transaction{
+    background-color :#D9D9D9;
+}
+.mb{
+    background-color :#D9D9D9;
+}
+.list-group-item {
+    background-color: #D9D9D9; /* Couleur de fond par défaut */
+    border: 1px solid #dee2e6; /* Bordure légère */
+    padding: 10px; /* Espacement interne */
+    border-radius: 0.25rem; /* Coins arrondis */
+    margin-bottom: 0.5rem; /* Espacement entre les éléments */
 }

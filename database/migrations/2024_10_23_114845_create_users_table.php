@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id(); // Identifiant unique
             $table->string('nom'); // Nom
             $table->string('prenom'); // Prénom
+            $table->string('email')->unique()->after('prenom'); // Ajoute le champ 'email' après le champ 'prenom'
             $table->string('telephone')->unique(); // Numéro de téléphone
             $table->string('photo')->nullable(); // Photo
             $table->date('date_naissance'); // Date de naissance
@@ -23,7 +24,7 @@ return new class extends Migration
             $table->enum('role', ['client', 'distributeur', 'agent']); // Rôle
             $table->boolean('statut')->default(false); // Statut (actif ou non)
             $table->date('date_creation')->useCurrent(); // Date de création
-            $table->string('password', 0); // Mot de passe
+            $table->string('password', 100); // Mot de passe
             $table->timestamps(); // Ajoute created_at et updated_at
         });
     }

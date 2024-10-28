@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,6 +13,7 @@ class User extends Authenticatable
     protected $fillable = [
         'nom',
         'prenom',
+        'email',
         'telephone',
         'photo',
         'date_naissance',
@@ -21,12 +21,13 @@ class User extends Authenticatable
         'cni',
         'role',
         'statut',
-        'password',
+        'date_creation',
+        'mot_de_passe',
+        'archived',
     ];
 
-    // Si vous utilisez des champs cachés, ajoutez-les ici
     protected $hidden = [
-        'password',
+        'mot_de_passe',
         'remember_token',
     ];
 
@@ -37,8 +38,35 @@ class User extends Authenticatable
     ];
 
     
-    public function transactions()
+    public function transactions(){
+         $casts = [
+            'date_naissance' => 'date',
+            'email_verified_at' => 'datetime',
+            'archived' => 'boolean',
+        ];
+    }
+    public function setMotDePasseAttribute($value)
+    {
+        $this->attributes['mot_de_passe'] = bcrypt($value);
+    }
+
+    public function scopeArchived($query)
+    {
+        return $query->where('archived', true);
+    }
+
+    public function scopeActive($query)
     {
         return $this->hasMany(Transaction::class, 'id_compte_source');
+        //return $query->where('archived', false);
+    }
+
+    public function scopeFilterByRole($query, $role)
+    {
+        if ($role !== 'all') {
+            return $query->where('role', $role);
+        }
+
+        return $query;
     }
 }

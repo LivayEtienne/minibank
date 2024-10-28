@@ -24,4 +24,19 @@ class Client extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+
+    public function block($id)
+    {
+        $client = Client::find($id);
+
+        if ($client) {
+            $client->statut = 'bloqué';
+            $client->save();
+
+            return response()->json(['success' => 'Client bloqué avec succès.']);
+        }
+
+        return response()->json(['error' => 'Client non trouvé.'], 404);
+    }
+
 }

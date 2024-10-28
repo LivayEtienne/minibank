@@ -1,4 +1,10 @@
 /* Style des titres des cartes */
+*{
+    list-style: none;
+    text-decoration: none;
+    margin: 0px;
+    padding: 0px;
+}
 .card-title {
     font-weight: bold;
     font-size: 1.25rem; /* Augmente la taille du texte */
@@ -60,3 +66,5 @@
 canvas {
     border-radius: 12px; /* Coins arrondis pour le graphique */
 }
+
+

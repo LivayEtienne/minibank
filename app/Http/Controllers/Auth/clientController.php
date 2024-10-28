@@ -1,30 +1,22 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Client; // Assurez-vous d'importer le bon modèle
-use App\Models\Transaction;
+use App\Models\ClientModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\UserController;
+
 
 class ClientController extends Controller
 {
-    public function index() 
+    public function index(Request $request)
     {
         $userId = 1; // Remplacez par $request->user()->id si vous utilisez l'authentification
 
         // Récupérer le solde du client
-        $user = Auth::user();
-        $client = Client::where('id_user', $user->id)->first();
-        $solde = $client->solde;
-        // Récupérer toutes les transactions du client
-        $transactions = Transaction::where('id_compte_source', $user->id)
-            ->orWhere('id_compte_destinataire', $user->id)
-            ->orderBy('created_at', 'desc') // Trier par date décroissante
-            ->paginate(10);
-    
+        $client = ClientModel::where('id_user', $userId)->first(['solde']);
 
         // Récupérer les transactions
         $transactions = DB::table('transactions')
@@ -54,27 +46,27 @@ class ClientController extends Controller
             ->get();
 
         //recuperer le qrcode du client
-        $base64QrCode = $this->generate();
-        
-        
+        $base64QrCode = $this->generate($userId);
+
+
 
         // Passer les données à la vue
         return view('client', [
             'transactions' => $transactions,
             'qrCode' => 'data:image/png;base64,' . $base64QrCode,
-            'solde' => $solde // Par défaut, 0 si pas de client trouvé
+            'solde' => $client ? $client->solde : 0 // Par défaut, 0 si pas de client trouvé
         ]);
     }
 
     public function getTransaction($id) {
         // Logique pour récupér
-        
+
     }
 
-    public function generate()
+    public function generate($id)
     {
         // Récupérer les données du client par ID
-        $client = Auth::User();
+        $client = UserController::show($id);
 
         // Créer une chaîne avec les données du client
         $data = "Prenom: {$client->prenom}\nNom: {$client->nom}\nTéléphone: {$client->telephone}";
@@ -86,16 +78,7 @@ class ClientController extends Controller
         $base64QrCode = base64_encode($qrCode);
 
         return $base64QrCode;
-      
+
     }
-
-    public function getSolde() {
-
-        // Logique pour recupérer le solde
-        $client = Auth::user()->id;
-        $solde = Client::where('id_user', $client)->first()->solde;
-        return $solde;
-    }
-
 
 }

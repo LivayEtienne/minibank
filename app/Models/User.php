@@ -14,9 +14,15 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    /**
+     * Les attributs qui sont assignables en masse.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'nom',
         'prenom',
+        'email',
         'email',
         'telephone',
         'photo',
@@ -35,11 +41,22 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    /**
+     * Les attributs qui doivent être masqués pour les tableaux.
+     *
+     * @var array<int, string>
+     */
     protected $hidden = [
+        'mot_de_passe',
         'mot_de_passe',
         'remember_token',
     ];
 
+    /**
+     * Les attributs qui doivent être castés en types natifs.
+     *
+     * @var array<string, string>
+     */
     /**
      * Les attributs qui doivent être castés en types natifs.
      *
@@ -51,6 +68,24 @@ class User extends Authenticatable
         'archived' => 'boolean',
     ];
 
+    /**
+     * Définit la valeur du mot de passe haché.
+     *
+     * @param string $value
+     * @return void
+     */
+    public function setMotDePasseAttribute($value)
+    {
+        $this->attributes['mot_de_passe'] = bcrypt($value);
+    }
+
+    /**
+     * Scope pour récupérer uniquement les clients archivés.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeArchived($query)
     /**
      * Définit la valeur du mot de passe haché.
      *

@@ -20,6 +20,9 @@ Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('agent.dashboard');
 
+
+Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+Route::post('/transactions/effectuer', [TransactionController::class, 'effectuerTransaction'])->name('transaction.effectuer');
 // Route pour afficher le dashboard du client
 
 Route::get('/client', [\App\Http\Controllers\ClientController::class, 'index']);
@@ -30,6 +33,10 @@ Route::get('/client', [\App\Http\Controllers\ClientController::class, 'index']);
 Route::get('distributeur', function () {
     return view('distributeur');
 });
+
+
+// Dans votre fichier routes/web.php
+Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
 
 
 //Route pour afficher la liste des transactions de l agent
@@ -103,3 +110,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+/*Route::get('/agent/dashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware('auth');
+Route::get('/client/dashboard', [ClientController::class, 'index'])->name('client.dashboard')->middleware('auth');
+Route::get('/distributeur/dashboard', [DistributeurController::class, 'index'])->name('distributeur.dashboard')->middleware('auth');*/

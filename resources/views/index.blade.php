@@ -38,7 +38,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#" onmouseover="this.classList.add('bg-primary');" onmouseout="this.classList.remove('bg-primary');">
+                    <a class="nav-link text-light" href="{{ route('transactions') }}" onmouseover="this.classList.add('bg-primary');" onmouseout="this.classList.remove('bg-primary');">
                         <i class="fas fa-dollar-sign"></i> Transactions
                     </a>
                 </li>
@@ -77,11 +77,6 @@
             <div class="container-fluid">
                 <h1 class="mb-4">Bienvenue sur le Tableau de Bord</h1>
 
-                <!-- Barre de recherche -->
-                <form class="form-inline mb-4">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Rechercher" aria-label="Search">
-                    <button class="btn btn-dark my-2 my-sm-0" type="submit">Rechercher</button>
-                </form>
 
                 <div class="row">
                     <div class="col-md-6 mb-4">
@@ -89,7 +84,7 @@
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <div>
                                     <h5 class="card-title">Nombre d'utilisateurs</h5>
-                                    <p class="card-text">150</p>
+                                    <p class="card-text">7</p>
                                 </div>
                                 <div class="display-4">
                                     <i class="fas fa-users"></i>
@@ -98,17 +93,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
-                        <div class="card text-white bg-success">
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h5 class="card-title">Nombre de commandes</h5>
-                                    <p class="card-text">200</p>
-                                </div>
-                                <div class="display-4">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
 
@@ -117,24 +102,19 @@
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Total</h5>
-                                    <h2>12,000,000 fc</h2>
+                                    <h5 class="card-title">Nombre Client</h5>
+                                    <h2>4</h2>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Total des ventes</h5>
-                                    <h2>2,38,485</h2>
-                                </div>
-                            </div>
+        
                         </div>
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Nombre total de distributeurs</h5>
-                                    <h2>84,382</h2>
+                                 <h5 class="card-title">Nombre total de distributeurs</h5>
+                                    <h2>3</h2>
                                 </div>
                             </div>
                         </div>
@@ -147,23 +127,9 @@
                                 <canvas id="lineChart"></canvas>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <h5 class="text-center">Répartition des Revenus</h5>
-                            <div class="chart-container">
-                                <canvas id="pieChart"></canvas>
-                            </div>
-                        </div>
+    
                     </div>
 
-                    <div class="row mt-4">
-                        <div class="col-md-6">
-                            <h5 class="text-center">Affaires Perdues</h5>
-                            <div class="chart-container">
-                                <canvas id="barChart"></canvas>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
                     </div>
                 </div>
                 <div id="transactionDetails"></div>

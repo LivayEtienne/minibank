@@ -38,7 +38,7 @@ class AuthenticatedSessionController extends Controller
             case 'distributeur':
                 return redirect()->route('distributeur.dashboard'); // Redirection vers le tableau de bord distributeur
             default:
-                return redirect()->intended('home'); // Redirection par défaut
+                return redirect()->intended('index'); // Redirection par défaut
         }
     }
 

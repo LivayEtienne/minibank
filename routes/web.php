@@ -5,11 +5,10 @@ use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\StatistiqueController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\distributeurController;
-use App\Http\Controllers\AgentController;
-
+use App\Http\Controllers\agentController;
+use App\Http\Controllers\UserController;
 
 // Route d'accueil
 Route::get('/', function () {
@@ -19,8 +18,8 @@ Route::get('/', function () {
 // Routes d'authentification
 Route::get('/connexion', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/connexion', [AuthController::class, 'login'])->name('connexion');
-Route::get('/register', [RegisteredUserController::class, 'create'])->name('auth.register');
-Route::post('/register', [RegisteredUserController::class, 'store'])->name('auth.register.store');
+//Route::get('/register', [RegisteredUserController::class, 'create'])->name('auth.register');
+//Route::post('/creer_compte', [RegisteredUserController::class, 'store'])->name('auth.register.store');
 
 // Routes pour le tableau de bord de l'agent
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -29,7 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('agent.dashboard');
 
     // Routes pour les transactions de l'agent
-    Route::get('/transactions_agent', [AgentController::class, 'index'])->name('transactions.agent.index');
+    Route::get('/transactions_agent', [agentController::class, 'index'])->name('transactions.agent.index');
 
     // Routes pour le profil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -41,6 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Routes pour le client
     Route::get('/client/dashboard', [ClientController::class, 'index'])->name('client.dashboard');
+    Route::get('/agent/transactions', [agentController::class, 'listTransaction'])->name('transactions');
 });
 
 // Routes pour les clients
@@ -52,15 +52,17 @@ Route::prefix('clients')->group(function () {
     Route::get('/{id}/edit', [ClientController::class, 'edit'])->name('clients.edit');
     Route::put('/{id}', [ClientController::class, 'update'])->name('clients.update');
     Route::post('/block/{id}', function () {
-        return response()->json(['success' => 'Client bloqué avec succès.']);
-    })->name('clients.block');
+            return response()->json(['success' => 'Client bloqué avec succès.']);
+        })->name('clients.block');
+    
+    Route::post('/transfer', [TransactionController::class, 'sendMoneyToClient'])->name('transaction.transfer');
 });
 
 // Routes pour les transactions
 Route::prefix('transactions')->group(function () {
     Route::post('/distributeur/depot', [TransactionController::class, 'transferFromDistributeurToClient'])->name('transaction.depot');
     Route::post('/distributeur/retrait', [TransactionController::class, 'withdrawForDistributeur'])->name('transaction.retrait');
-    Route::post('/client/transfer', [TransactionController::class, 'sendMoneyToClient'])->name('transaction.transfer');
+    
 });
 
 // Routes pour les pages de transaction du distributeur
@@ -74,15 +76,6 @@ Route::get('/distributeur/retrait', function () {
     return view('transaction/retrait', compact('solde'));
 })->name('transactions.retrait');
 
-Route::get('/client/transfer', function () {
-    $qrCode = app(ClientController::class)->generate();
-    $solde = app(ClientController::class)->getSolde(); 
-
-    return view('transaction/transfer', [ 
-        'qrCode' => 'data:image/png;base64,'. $qrCode,
-        'solde' => $solde,
-    ]);
-})->name('transactions.transfer');
 
 // Routes d'authentification
 Route::get('/auth/login', function () {
@@ -93,7 +86,9 @@ Route::get('/creer_compte', function () {
     return view('auth.register');
 })->name('creer_compte');
 
-// Statistiques
-Route::get('/index', [StatistiqueController::class, 'index'])->name('dashboard');
+Route::post(('creer_compte'), [UserController::class,'store'])->name('creer_compte');
+
+// Ajouter un compte utilisateur
+Route::get('/index', [AgentController::class, 'create'])->name('dashboard');
 
 require __DIR__.'/auth.php';

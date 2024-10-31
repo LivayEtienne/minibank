@@ -21,20 +21,15 @@ class Transaction extends Model
     ];
 
     
-   /* public function compteSource()
+    public function sourceUser()
     {
-        return $this->belongsTo(Client::class, 'id_compte_source');
+        return $this->belongsTo(User::class, 'id_compte_source', 'id');
     }
 
-    public function compteDestinataire()
+    public function destinationUser()
     {
-        return $this->belongsTo(Client::class, 'id_compte_destinataire');
+        return $this->belongsTo(User::class, 'id_compte_destinataire', 'id');
     }
-
-    public function distributeur()
-    {
-        return $this->belongsTo(Agent::class, 'id_distributeur');
-    }*/
 }
 
 

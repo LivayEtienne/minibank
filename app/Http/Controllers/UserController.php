@@ -26,32 +26,31 @@ class UserController extends Controller
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'telephone' => 'required|string|max:255',
-            'photo' => 'nullable|image|max:2048', // Ajoutez la validation pour les fichiers images si nécessaire
+            'photo' => 'nullable|image|max:2048',
             'date_naissance' => 'required|date',
             'adresse' => 'required|string|max:255',
             'cni' => 'required|integer',
             'role' => 'required|in:client,distributeur,agent',
-            'mot_de_passe' => 'required|string|min:8|confirmed', // Validation du mot de passe
+            'password' => 'required|string|min:8|confirmed', // Validation du mot de passe
         ]);
-
+    
         // Créer l'utilisateur
         User::create([
             'nom' => $request->nom,
             'prenom' => $request->prenom,
             'telephone' => $request->telephone,
-            'photo' => $request->photo, // Gérez le téléchargement de fichiers si nécessaire
+            'photo' => $request->photo ? $request->photo->store('photos') : null, // Gérez le téléchargement d'images
             'date_naissance' => $request->date_naissance,
             'adresse' => $request->adresse,
             'cni' => $request->cni,
             'role' => $request->role,
             'statut' => true, // Statut par défaut à actif
             'date_creation' => now(), // Date actuelle
-            'mot_de_passe' => Hash::make($request->mot_de_passe), // Hachage du mot de passe
+            'password' => Hash::make($request->password), // Hachage du mot de passe
         ]);
-
+    
         return redirect()->route('users.index')->with('success', 'Utilisateur créé avec succès.');
     }
-
     /**
      * Affiche la liste des utilisateurs.
      */

@@ -27,8 +27,9 @@
         <!-- Historique Section -->
       
         <div class="col-md-4 mb-4">
+            <h2 class="text-center">HISTORIQUES</h2>
             <div class="historique">
-                <h2 class="text-center">HISTORIQUES</h2>
+                
                 
                
                     @foreach($transactions as $transaction)
@@ -53,8 +54,9 @@
                             </ul>
                         </div>
                     @endforeach
-                
             </div>
+
+     
         </div>
 
         <!-- Carte Section -->

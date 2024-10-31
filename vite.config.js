@@ -16,7 +16,8 @@ export default defineConfig({
                 //'resources/js/distributeur.js',
                 'resources/css/transactions_agent.css',
                 'resources/js/connexion.js',
-                'resources/image/door.jpg'
+                'resources/image/door.jpg',
+                'resources/js/cn.js'
             ],
             refresh: true,
         }),

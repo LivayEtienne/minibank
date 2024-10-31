@@ -100,7 +100,7 @@
     @endif
 
 
-    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" onsubmit="return validateForm()">
+    <form method="POST" action="{{ route('creer_compte') }}" enctype="multipart/form-data" onsubmit="return validateForm()">
         @csrf
 
         <div class="form-row">
@@ -125,11 +125,11 @@
             </div>
         </div>
 
-        <div class="form-row">
+        <div class="form-row" >
             <!-- Email -->
-            <div class="form-group">
+            <div class="form-group" style="display:none">
                 <label for="email">Email</label>
-                <input id="email" class="form-control" type="email" name="email" value="{{ old('email') }}" required>
+                <input id="email" class="form-control" type="email" name="email" value="exemple@gmail.com" >
                 <div class="error email-error"></div>
                 @error('email')
                     <div class="error">{{ $message }}</div>
@@ -201,7 +201,7 @@
             <select id="role" class="form-control" name="role" required>
                 <option value="" disabled selected>Choisir un rôle</option>
                 <option value="client">Client</option>
-                <option value="administrateur">Administrateur</option>
+                <option value="distributeur">Distributeur</option>
             </select>
             <div class="error role-error"></div>
             @error('role')
@@ -213,7 +213,7 @@
             <!-- Mot de Passe -->
             <div class="form-group">
                 <label for="mot_de_passe">Mot de Passe</label>
-                <input id="mot_de_passe" class="form-control" type="password" name="mot_de_passe" required autocomplete="new-password">
+                <input id="mot_de_passe" class="form-control" type="password" name="password" required autocomplete="new-password">
                 <div class="error mot_de_passe-error"></div>
                 @error('mot_de_passe')
                     <div class="error">{{ $message }}</div>
@@ -248,12 +248,10 @@
         @endif
     </form>
 
+    @vite(['resources/js/cn.js'])
     <!-- Inclure le script CDN pour canvas-confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-    <script src="{{ asset('js/confirmation.js') }}"></script>
 
-
-@vite(['resources/js/confirmation.js'])
 
 
 <script>

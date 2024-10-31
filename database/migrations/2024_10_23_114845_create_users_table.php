@@ -24,7 +24,7 @@ return new class extends Migration
             $table->enum('role', ['client', 'distributeur', 'agent']); // Rôle
             $table->boolean('statut')->default(false); // Statut (actif ou non)
             $table->date('date_creation')->useCurrent(); // Date de création
-            $table->string('password', 100); // Mot de passe
+            $table->string('password'); // Mot de passe
             $table->timestamps(); // Ajoute created_at et updated_at
         });
     }

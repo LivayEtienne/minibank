@@ -11,17 +11,11 @@ body {
 .historique {
     min-height: 150px;
     overflow-y: auto;
-    padding-top: 100px;
-
-
-    
-       
-        padding: 20px;
-        margin-top: 50px; /* Descend la section de 40px */
-        margin-left: -300px; /* Décale de 300px à gauche */
-        width: calc(100% + 300px); /* Étend la largeur de 300px vers la gauche */
-   
-
+    padding-top: 100px;   
+    padding: 20px;
+    margin-top: 50px; /* Descend la section de 40px */
+    margin-left: -300px; /* Décale de 300px à gauche */
+    width: calc(100% + 300px); /* Étend la largeur de 300px vers la gauche */
 
 }
 
@@ -40,11 +34,11 @@ button {
         width: 100px;
     }
 
-    .historique {
+    .h2{
         width: 100%;
         margin-left: 0;
         padding-top: 50px;
-        background-color: #fff;
+        color: #fff;
 
     }
 
@@ -76,6 +70,7 @@ button {
 
     li {
         list-style: none;
+        color: black;
     }
 
     .carte1 {
@@ -100,7 +95,6 @@ button {
     align-items: center; /* Centrer verticalement */
     width: 582px; /* Ajuster selon vos besoins */
     height: 283px; /* Ajuster la hauteur selon vos besoins */
-    background-color: #003366; /* Exemple de couleur de fond */
     padding: 20px; /* Espacement interne */
     border: 2px solid #FFFFFF; /* Bordure pour le visuel */
     border-radius: 10px; /* Coins arrondis */

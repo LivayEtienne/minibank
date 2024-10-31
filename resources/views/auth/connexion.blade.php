@@ -29,6 +29,6 @@
 
         <a href="forgot-password.php" class="forgot-password">Mot de passe oublié?</a>
     </div>
-
+    
 </body>
 </html>

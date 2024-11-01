@@ -9,19 +9,16 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    // Les attributs qui peuvent être assignés en masse
     protected $fillable = [
         'nom',
         'prenom',
-        'email',
         'telephone',
         'photo',
         'date_naissance',
         'adresse',
         'cni',
         'role',
-        'statut',
-        'date_creation',
+        'created_at',
         'mot_de_passe',
         'archived',
     ];
@@ -31,15 +28,16 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    // Définir les attributs en date ou temps si nécessaire
     protected $casts = [
         'date_naissance' => 'date',
-        'statut' => 'boolean',
+        'email_verified_at' => 'datetime',
+        'archived' => 'boolean',
     ];
 
 
 
-    
+
+
     // public function transactions(){
     //      $casts = [
     //         'date_naissance' => 'date',
@@ -60,10 +58,8 @@ class User extends Authenticatable
     public function scopeActive($query)
     {
         return $query->where('archived', false);
-        //return $query->where('archived', false);
     }
 
-    
     public function scopeFilterByRole($query, $role)
     {
         if ($role !== 'all') {
@@ -73,3 +69,5 @@ class User extends Authenticatable
         return $query;
     }
 }
+
+

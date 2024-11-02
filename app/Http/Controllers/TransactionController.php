@@ -263,6 +263,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Transaction; // Assurez-vous d'importer le modèle Transaction
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+
+
+
 
 class TransactionController extends Controller
 {
@@ -299,46 +305,94 @@ class TransactionController extends Controller
         return redirect()->back()->with('success', 'Transfert effectué avec succès.');
     }
 
-    // Dépôt du distributeur au client
-    public function transferFromDistributeurToClient(Request $request)
-    {
+
+
+    // Depot client
+        public function transferFromDistributeurToClient(Request $request)
+        {
+        // Validation des entrées avec messages personnalisés
         $request->validate([
-            'montant' => 'required|numeric|min:500',
-            'telephone' => 'required|exists:users,telephone',
-        ]);
+        'montant' => 'required|numeric|min:500',
+        'telephone' => 'required|exists:users,telephone',
+    ], [
+        'montant.required' => 'Le montant est requis.',
+        'montant.numeric' => 'Le montant doit être un nombre.',
+        'montant.min' => 'Le montant doit être d\'au moins 500.', // Message si le montant est inférieur à 500
+        'telephone.required' => 'Le numéro de téléphone est requis.',
+        'telephone.exists' => 'Le numéro de téléphone est incorrect ou l\'utilisateur n\'existe pas.', // Message si le numéro est incorrect
+    ]);
 
+                // Récupérer le client via le numéro de téléphone
+            $user = User::where('telephone', $request->telephone)->first();
+            if (!$user) {
+                return redirect()->back()->with('error', 'Utilisateur non trouvé.');
+            }
 
-        //$distributeur = Distributeurs::where('te', 1)->first();
-        $user0 = Auth::user();
-        $distributeur = Distributeurs::where('id_user', $user0->id)->first();
+            // Vérifier si le compte de l'utilisateur est actif
+            if ($user->statut == 1) { // 1 signifie que l'utilisateur est bloqué
+                return redirect()->back()->with('error', 'Compte utilisateur bloqué.');
+            }
 
-        $user = User::where('telephone', $request->telephone)-> first();
+    // Récupérer le client associé à cet utilisateur
         $client = Client::where('id_user', $user->id)->first();
-        $frais = $request->montant * 0.01; // Calcul des frais
-
-        if ($distributeur->solde < $request->montant) {
-            return redirect()->back()->with('error', 'Solde insuffisant.');
-        }
-
-        // Logique de transfert
-        $distributeur->solde -= $request->montant;
-        $distributeur->solde += $frais;
-        $client->solde += $request->montant;
-        $distributeur->save();
-        $client->save();
-
-        Transaction::create([
-            'id_compte_source' => $distributeur->id,
-            'id_compte_destinataire' => $client->id,
-            'id_distributeur' => $distributeur->id,
-            'montant' => $request->montant,
-            'type' => 'envoi',
-            'frais' => $frais,
-        ]);
-
-        return redirect()->back()->with('success', 'Transfert effectué avec succès.');
+        if (!$client) {
+        return redirect()->back()->with('error', 'Client non trouvé.');
     }
+
+            // Récupérer le distributeur connecté
+            $distributeur = Distributeurs::where('id_user', Auth::id())->first();
+            if (!$distributeur) {
+                return redirect()->back()->with('error', 'Distributeur non trouvé.');
+            }
+        
+            // Calcul des frais (1 % du montant) et montant net
+            $frais = $request->montant * 0.01;
+            $montant_net = $request->montant - $frais;
+        
+            // Vérification du solde du distributeur
+            if ($distributeur->solde < $request->montant) {
+                return redirect()->back()->with('error', 'Solde insuffisant pour effectuer le dépôt.');
+            }
+        
+        
+        
+            // Envelopper le tout dans une transaction pour garantir la cohérence des données
+            DB::beginTransaction();
+            try {
+                // Effectuer le transfert
+                $distributeur->solde -= $request->montant;  // Déduit uniquement le montant du distributeur
+                $client->solde += $montant_net;             // Créditer le montant net au client
+                $distributeur->solde += $frais;             // Ajouter les frais de 1% au solde du distributeur
+        
+                // Enregistrer les modifications des soldes
+                $distributeur->save();
+                $client->save();
+        
+                // Enregistrer la transaction avec le statut 'complété'
+                Transaction::create([
+                    'id_compte_source' => $distributeur->id,            // ID du distributeur
+                    'id_compte_destinataire' => $client->id,            // ID du client
+                    'id_distributeur' => $distributeur->id_user,        // ID de l'utilisateur distributeur
+                    'montant' => $request->montant,
+                    'type' => 'depot',                                  // Type de transaction : dépôt
+                    'frais' => $frais,
+                    'statut' => 'complété',                            // Définir le statut à 'complété'
+                ]);
+        
+                // Commit des changements
+                DB::commit();
+        
+                return redirect()->back()->with('success', 'Transfert effectué avec succès.');
+            } catch (\Exception $e) {
+                DB::rollback();
+                Log::error('Erreur lors du transfert : ' . $e->getMessage());
+                return redirect()->back()->with('error', 'Échec du transfert : ' . $e->getMessage());
+            }
+        }
     
+
+
+
     // Envoi Client → Client
     public function sendMoneyToClient(Request $request)
     {
@@ -369,7 +423,7 @@ class TransactionController extends Controller
         Transaction::create([
             'id_compte_source' => $clientFrom->id,
             'id_compte_destinataire' => $clientTo->id,
-            'id_distributeur' => null, // Pas de distributeur impliqué ici
+            'id_distributeur' => $distributeur->id, // Enregistrer l’ID du distributeur impliqué
             'montant' => $request->montant,
             'type' => 'envoi',
             'frais' => $frais,
@@ -377,50 +431,80 @@ class TransactionController extends Controller
     
         return redirect()->back()->with('success', 'Transfert effectué avec succès.');
     }
-       
+ // Retrait du Client au distributeur 
+ public function withdrawForDistributeur(Request $request)
+ {
+     // Validation des entrées
+     $request->validate([
+         'montant' => 'required|numeric|min:500',
+         'telephone' => 'required|exists:users,telephone',
+     ]);
+ 
+     // Récupérer le distributeur connecté
+     $distributeur = Distributeurs::where('id_user', Auth::id())->first();
+     if (!$distributeur) {
+         return redirect()->back()->with('error', 'Distributeur non trouvé.');
+     }
+ 
+     // Récupérer le client via le numéro de téléphone
+    $user = User::where('telephone', $request->telephone)->first();
+if (!$user) {
+    return redirect()->back()->with('error', 'Utilisateur non trouvé.');
+}
 
-    // Retrait du Client au distributeur 
-    public function withdrawForDistributeur(Request $request)
-    {
-        $request->validate([
-            'montant' => 'required|numeric|min:500',
-            'telephone' => 'required|exists:users,telephone',
-        ]);
+// Vérifier si le compte de l'utilisateur est actif
+if ($user->statut == 1) { // 1 signifie que l'utilisateur est bloqué
+    return redirect()->back()->with('error', 'Compte utilisateur bloqué.');
+}
 
-        //$distributeur = Distributeurs::where('id', 1)->first();
-        $user0 = Auth::user();
-        $distributeur = Distributeurs::where('id_user', $user0->id)->first();
+// Récupérer le client associé à cet utilisateur
+$client = Client::where('id_user', $user->id)->first();
+if (!$client) {
+    return redirect()->back()->with('error', 'Client non trouvé.');
+}
+     // Calcul des frais (1 % du montant)
+     $frais = $request->montant * 0.01;
+ 
+     // Vérification du solde du client après application des frais
+     if ($client->solde < $request->montant + $frais) {
+         return redirect()->back()->with('error', 'Solde insuffisant après application des frais.');
+     }
+ 
+     // Envelopper le tout dans une transaction pour garantir la cohérence des données
+     DB::beginTransaction();
+     try {
+         // Logique de transfert
+         $client->solde -= $request->montant + $frais; // Déduit le montant et les frais du client
+         $distributeur->solde += $request->montant + $frais; // Ajoute le montant et les frais au solde du distributeur
+ 
+         // Enregistrer les modifications
+         $client->save();
+         $distributeur->save();
+ 
+         // Enregistrer la transaction avec les frais et le statut
+         Transaction::create([
+             'id_compte_source' => $client->id,                // ID du client
+             'id_compte_destinataire' => $distributeur->id,    // ID du distributeur
+             'id_distributeur' => $distributeur->id_user,      // ID de l'utilisateur distributeur
+             'montant' => $request->montant,
+             'type' => 'retrait',
+             'frais' => $frais,
+             'statut' => 'complété',                          // Définir le statut à 'complété'
+         ]);
+ 
+         // Commit des changements
+         DB::commit();
+ 
+         // Rediriger avec un message de succès
+         return redirect()->back()->with('success', 'Retrait effectué avec succès.');
+     } catch (\Exception $e) {
+         DB::rollback();
+         Log::error('Erreur lors du retrait : ' . $e->getMessage());
+         return redirect()->back()->with('error', 'Échec du retrait : ' . $e->getMessage());
+     }
+ }
+ 
 
-        $user1 = User::where('telephone', $request->telephone)-> first(); 
-        $client = Client::where('id_user', $user1->id)->first();
-        
-        // Calcul des frais (1 % du montant)
-        $frais = $request->montant * 0.01;
-    
-        // Vérification du solde du client après application des frais
-        if ($client->solde < $request->montant + $frais) {
-            return redirect()->back()->with('error', 'Solde insuffisant après application des frais.');
-        
-        }
-
-        // Logique de transfert
-        $client->solde -= $request->montant; // Déduit le montant du client
-        $distributeur->solde += $request->montant + $frais; // Ajoute le montant au distributeur
-        $client->save();
-        $distributeur->save();
-    
-        // Enregistrer la transaction avec les frais
-        Transaction::create([
-            'id_compte_source' => $client->id,
-            'id_compte_destinataire' => $distributeur->id,
-            'id_distributeur' => $distributeur->id,
-            'montant' => $request->montant,
-            'type' => 'retrait',
-            'frais' => $frais,
-        ]);
-    
-        return redirect()->back()->with('success', 'Retrait effectué avec succès.');
-    }
     }
     // Envoi Client → Client
     /*public function sendMoneyToClient(Request $request)

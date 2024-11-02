@@ -11,6 +11,7 @@ use App\Http\Controllers\distributeurController;
 use App\Http\Controllers\AgentController;
 
 
+
 // Route d'accueil
 Route::get('/', function () {
     return view('welcome');
@@ -38,6 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Routes pour le distributeur
     Route::get('/distributeur/dashboard', [distributeurController::class, 'index'])->name('distributeur.dashboard');
+    
 
     // Routes pour le client
     Route::get('/client/dashboard', [ClientController::class, 'index'])->name('client.dashboard');
@@ -95,5 +97,32 @@ Route::get('/creer_compte', function () {
 
 // Statistiques
 Route::get('/index', [StatistiqueController::class, 'index'])->name('dashboard');
+
+
+Route::get('/distributeur', [DistributeurController::class, 'getSolde'])->name('distributeur.index');
+
+
+
+// Route for afficherClients
+Route::get('/distributeur/dashboard', [DistributeurController::class, 'afficherClients'])->name('distributeur.dashboard');
+
+
+// Route for annulerDepot
+Route::delete('/transactions/{id}/annuler-depot', [DistributeurController::class, 'annulerDepot'])->name('transactions.annulerDepot');
+
+// Route for annulerRetrait
+Route::delete('/transactions/{id}/annuler-retrait', [DistributeurController::class, 'annulerRetrait'])->name('transactions.annulerRetrait');
+
+
+
+
+
+// Route for afficherHistoriqueTransactions
+Route::get('/distributeur/historique', [DistributeurController::class, 'afficherHistoriqueTransactions'])->name('distributeur.historique');
+
+// Route for show
+Route::get('/distributeur/{id}', [DistributeurController::class, 'show'])->name('distributeur.show');
+
+
 
 require __DIR__.'/auth.php';

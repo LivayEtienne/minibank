@@ -9,11 +9,27 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\distributeurController;
 use App\Http\Controllers\agentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Creditdistributeur;
+
 
 // Route d'accueil
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/credit-distributeur', function () {
+    return view('credit_distributeur');
+})->name('distributeur.crediter.form');
+
+Route::post('/credit-distributeur', [Creditdistributeur::class, 'crediter'])->name('distributeur.crediter');
+Route::get('/credit-distributeur', [Creditdistributeur::class, 'showCreditForm'])->name('distributeur.showCreditForm');
+
+Route::get('/transactions/{id_distributeur}', [Creditdistributeur::class, 'listerTransactions'])->name('transactions.liste');
+Route::patch('/transactions/{id}/annuler', [Creditdistributeur::class, 'annulerTransaction'])->name('transactions.annuler');
+
+
+
 
 // Routes d'authentification
 Route::get('/connexion', [AuthController::class, 'showLoginForm'])->name('login');
@@ -54,7 +70,7 @@ Route::prefix('clients')->group(function () {
     Route::post('/block/{id}', function () {
             return response()->json(['success' => 'Client bloqué avec succès.']);
         })->name('clients.block');
-    
+
     Route::post('/transfer', [TransactionController::class, 'sendMoneyToClient'])->name('transaction.transfer');
 });
 
@@ -62,17 +78,17 @@ Route::prefix('clients')->group(function () {
 Route::prefix('transactions')->group(function () {
     Route::post('/distributeur/depot', [TransactionController::class, 'transferFromDistributeurToClient'])->name('transaction.depot');
     Route::post('/distributeur/retrait', [TransactionController::class, 'withdrawForDistributeur'])->name('transaction.retrait');
-    
+
 });
 
 // Routes pour les pages de transaction du distributeur
 Route::get('/distributeur/depot', function () {
-    $solde = app(distributeurController::class)->getSolde(); 
+    $solde = app(distributeurController::class)->getSolde();
     return view('transaction/depot', compact('solde'));
 })->name('transactions.depot');
 
 Route::get('/distributeur/retrait', function () {
-    $solde = app(distributeurController::class)->getSolde(); 
+    $solde = app(distributeurController::class)->getSolde();
     return view('transaction/retrait', compact('solde'));
 })->name('transactions.retrait');
 

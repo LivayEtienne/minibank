@@ -13,10 +13,12 @@ class Distributeurs extends Model
 
     // Les attributs qui peuvent être assignés en masse
     protected $fillable = [
+        'id_user', // Ajoutez cette ligne
         'numero_compte',
-        'id_user',
         'solde',
         'bonus',
+        'created_at',
+        'updated_at',
     ];
 
     // Relation avec le modèle User

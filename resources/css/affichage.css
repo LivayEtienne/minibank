@@ -142,22 +142,6 @@ tr {
     transition: all 0.2s ease-in-out;
 }
 
-.modal {
-    display: none; /* Masqué par défaut */
-    position: fixed; /* Position fixe pour le modal */
-    z-index: 1050; /* Assurez-vous que le modal est au-dessus des autres éléments */
-    left: 50%; /* Centrer horizontalement */
-    top: 20px; /* Positionner à 20 pixels du haut de la page */
-    transform: translateX(-50%); /* Ajuster la position horizontale */
-    width: 90%; /* Largeur du modal, ajustable selon vos besoins */
-    max-width: 600px; /* Largeur maximale */
-    margin: auto; /* Centrer le modal */
-    border-radius: 12px; /* Coin arrondi */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Ombre plus douce et plus prononcée */
-    transition: all 0.3s ease; /* Ajout d'une transition */
-    animation: fadeIn 0.5s; /* Animation d'apparition */
-}
-
 .modal-content {
     border-radius: 12px;
     background-color: #fff; /* Fond blanc */

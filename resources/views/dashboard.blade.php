@@ -29,10 +29,11 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-light" href="#">
+                <a class="nav-link text-light" href="{{ route('transactions.agent.index') }}">
                     <i class="fas fa-coins"></i> Transactions
                 </a>
             </li>
+
             <!-- Ajoutez ici d'autres éléments du menu si nécessaire -->
             <li class="nav-item">
                 <a class="nav-link text-light" href="{{ route('clients.index') }}">
@@ -49,8 +50,8 @@
                 <a class="nav-link text-light" href="{{ route('logout')}}" onmouseover="this.classList.add('bg-primary');" onmouseout="this.classList.remove('bg-primary');">
                             <i class="fas fa-credit-card"></i> Deconnexion
                 </a>
-            </li> 
-            
+            </li>
+
         </ul>
     </div>
 

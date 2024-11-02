@@ -100,7 +100,7 @@
     @endif
 
 
-    <form method="POST" action="{{ route('creer_compte') }}" enctype="multipart/form-data" onsubmit="return validateForm()">
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" onsubmit="return validateForm()">
         @csrf
 
         <div class="form-row">
@@ -125,17 +125,7 @@
             </div>
         </div>
 
-        <div class="form-row" >
-            <!-- Email -->
-            <div class="form-group" style="display:none">
-                <label for="email">Email</label>
-                <input id="email" class="form-control" type="email" name="email" value="exemple@gmail.com" >
-                <div class="error email-error"></div>
-                @error('email')
-                    <div class="error">{{ $message }}</div>
-                @enderror
-            </div>
-
+        <div class="form-row">
             <!-- Téléphone -->
             <div class="form-group">
                 <label for="telephone">Téléphone</label>
@@ -146,20 +136,18 @@
                 @enderror
             </div>
 
+            <!-- Date de Naissance -->
+            <div class="form-group">
+                <label for="date_naissance">Date de Naissance</label>
+                <input id="date_naissance" class="form-control" type="date" name="date_naissance" value="{{ old('date_naissance') }}" required max="2000-12-31">
+                <div class="error date_naissance-error"></div>
+                @error('date_naissance')
+                    <div class="error">{{ $message }}</div>
+                @enderror
+            </div>
         </div>
 
         <div class="form-row">
-            <!-- Date de Naissance -->
-        <div class="form-group">
-            <label for="date_naissance">Date de Naissance</label>
-            <input id="date_naissance" class="form-control" type="date" name="date_naissance" value="{{ old('date_naissance') }}" required max="2000-12-31">
-            <div class="error date_naissance-error"></div>
-            @error('date_naissance')
-                <div class="error">{{ $message }}</div>
-            @enderror
-        </div>
-
-
             <!-- Adresse -->
             <div class="form-group">
                 <label for="adresse">Adresse</label>
@@ -169,9 +157,7 @@
                     <div class="error">{{ $message }}</div>
                 @enderror
             </div>
-        </div>
 
-        <div class="form-row">
             <!-- Carte d'Identité -->
             <div class="form-group">
                 <label for="cni">CNI</label>
@@ -181,9 +167,11 @@
                     <div class="error">{{ $message }}</div>
                 @enderror
             </div>
+        </div>
 
+        <div class="form-row">
             <!-- Photo -->
-            <div class="form-group">
+            <div class="form-group full-width">
                 <label for="photo">Photo</label>
                 <input id="photo" class="form-control mt-2" type="file" name="photo" accept="image/*" onchange="previewAvatar(event)">
                 <div class="text-center">
@@ -198,11 +186,11 @@
 
         <div class="form-group">
             <label for="role">Rôle</label>
-            <select id="role" class="form-control" name="role" required>
-                <option value="" disabled selected>Choisir un rôle</option>
+            <select name="role" required>
                 <option value="client">Client</option>
                 <option value="distributeur">Distributeur</option>
             </select>
+
             <div class="error role-error"></div>
             @error('role')
                 <div class="error">{{ $message }}</div>
@@ -213,7 +201,7 @@
             <!-- Mot de Passe -->
             <div class="form-group">
                 <label for="mot_de_passe">Mot de Passe</label>
-                <input id="mot_de_passe" class="form-control" type="password" name="password" required autocomplete="new-password">
+                <input id="mot_de_passe" class="form-control" type="password" name="mot_de_passe" required autocomplete="new-password">
                 <div class="error mot_de_passe-error"></div>
                 @error('mot_de_passe')
                     <div class="error">{{ $message }}</div>
@@ -248,10 +236,13 @@
         @endif
     </form>
 
-    @vite(['resources/js/cn.js'])
+
     <!-- Inclure le script CDN pour canvas-confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="{{ asset('js/confirmation.js') }}"></script>
 
+
+@vite(['resources/js/confirmation.js'])
 
 
 <script>
